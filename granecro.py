@@ -316,7 +316,8 @@ def use_card():
                 st.session_state.credits_state += card_details['credits']
 
                 # add learned magic
-                st.session_state.magic_state.append(card_details['learning_effect'])
+                if card_details['learning_effet'] != "":
+                    st.session_state.magic_state.append(card_details['learning_effect'])
 
                 st.write(f"You have admitted to '{card_details['text']}' for {int(card_details['admittance_sanity_price'])} sanity points!")
                 time.sleep(1)
