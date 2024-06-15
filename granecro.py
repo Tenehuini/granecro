@@ -22,6 +22,7 @@ data = pd.read_csv("granecro-cards.csv", sep=";").fillna("")
 ##########################################################################
 
 st.logo(ci_path+"ginlogo.png",link="https://bulgur007.itch.io/graduate-in-necromancy")
+#st.header("Test")
 st.markdown("# Graduate in Necromancy! <span style='font-size:12px'>by <a href='https://bulgur007.itch.io/graduate-in-necromancy'>Bulgur007</a></span>  ", unsafe_allow_html=True)
 #st.markdown("by [Bulgur007](https://bulgur007.itch.io/graduate-in-necromancy)")
 
@@ -108,9 +109,9 @@ def show_playground(context, main_content=False, message = ""):
 
     with col1:
         if "sanity" in st.session_state:
-            st.markdown("**Sanity:** " + str(int(st.session_state.sanity)) + "/5 @")
+            st.markdown("**Sanity:** " + str(int(st.session_state.sanity)) + "/5 @  ")
         if "thesis_state" in st.session_state:
-            st.markdown("**Thesis:** " + str(int(st.session_state.thesis_state))+ "/5")
+            st.markdown("**Thesis:** " + str(int(st.session_state.thesis_state))+ "/5  ")
         if "credits_state" in st.session_state:
             st.markdown("**Credits:** " + str(int(st.session_state.credits_state))+ "/45 C")
 
@@ -123,9 +124,9 @@ def show_playground(context, main_content=False, message = ""):
         img_base64 = image_to_base64(ci_path + "back.png")
 
         if len(st.session_state.s1) == 0:
-            image_string = f"<image src='data:image/jpeg;base64,{img_base64}' style='opacity: 0.3;' width='100'/>"
+            image_string = f"<image src='data:image/jpeg;base64,{img_base64}' style='opacity: 0.3;' width='50'/>"
         else:
-            image_string = f"<image src='data:image/jpeg;base64,{img_base64}' width='100'/>"
+            image_string = f"<image src='data:image/jpeg;base64,{img_base64}' width='50'/>"
 
         st.html(image_string)
         st.markdown(f"Cards {len(st.session_state.s1)}")
@@ -137,9 +138,9 @@ def show_playground(context, main_content=False, message = ""):
         #st.image(ci_path + "back.png", width=100)
 
         if len(st.session_state.s2) == 0:
-            image_string = f"<image src='data:image/jpeg;base64,{img_base64}' style='opacity: 0.3;' width='100'/>"
+            image_string = f"<image src='data:image/jpeg;base64,{img_base64}' style='opacity: 0.3;' width='50'/>"
         else:
-            image_string = f"<image src='data:image/jpeg;base64,{img_base64}' width='100'/>"
+            image_string = f"<image src='data:image/jpeg;base64,{img_base64}' width='50'/>"
 
         st.html(image_string)
         if len(st.session_state.s2) == 12:
@@ -374,9 +375,10 @@ def use_card():
 
 @st.experimental_dialog("End")
 def end_game():
-
+de
     if st.session_state.credits_state > 44 and st.session_state.sanity > -1 and st.session_state.thesis_state > 4:
         st.markdown("## You have won!")
+        st.balloons()
     else:
         st.markdown("## You have lost!")
 
