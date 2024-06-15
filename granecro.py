@@ -339,7 +339,7 @@ def use_card():
         if st.button("Execute Action"):
             st.write(f"Executing {action}...")
             # Add the logic for each action here
-            if action == "Enroll yourself to course":
+            if action == "Enroll yourself to the course":
 
                 # ad card to semester courses with 0 study buddies
                 st.session_state.s[st.session_state.current_semester]['courses'].append(
