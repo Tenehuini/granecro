@@ -72,7 +72,7 @@ def check_magic_prerequisities(p):
     else:
         present_magic = st.session_state.magic_state
         if len(present_magic) == 0:
-            present_magic = "nothing so far."
+            present_magic = "nothing so far"
         else:
             present_magic = "just "+", ".join([magic_to_word(x) for x in present_magic])
 
