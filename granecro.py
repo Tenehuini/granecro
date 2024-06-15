@@ -409,6 +409,8 @@ def end_game():
     else:
         st.markdown("## You have lost!")
 
+    if st.session_state.thesis_state > 5:
+        st.session_state.thesis_state = 5
 
     st.markdown(f"You got {int(st.session_state.credits_state)} credits, while having  ")
     st.markdown(f"thesis in stage {st.session_state.thesis_state} and sanity {int(st.session_state.sanity)}.")
