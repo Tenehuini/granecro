@@ -4,7 +4,8 @@ import time
 import base64
 import random
 
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
+
 
 ###########################################################################
 
@@ -17,11 +18,20 @@ data = pd.read_csv("granecro-cards.csv", sep=";").fillna("")
 #st.dataframe(data)
 
 
+
+##########################################################################
+
+st.logo(ci_path+"ginlogo.png",link="https://bulgur007.itch.io/graduate-in-necromancy")
+st.markdown("# Graduate in Necromancy! <span style='font-size:12px'>by <a href='https://bulgur007.itch.io/graduate-in-necromancy'>Bulgur007</a></span>  ", unsafe_allow_html=True)
+#st.markdown("by [Bulgur007](https://bulgur007.itch.io/graduate-in-necromancy)")
+
+
 ###########################################################################
 # hard params
 
 max_sanity = 5
 min_sanity = -2
+
 
 ###########################################################################
 # support functions
@@ -98,11 +108,11 @@ def show_playground(context, main_content=False, message = ""):
 
     with col1:
         if "sanity" in st.session_state:
-            st.write("Sanity: " + str(int(st.session_state.sanity)))
+            st.markdown("**Sanity:** " + str(int(st.session_state.sanity)) + "/5 @")
         if "thesis_state" in st.session_state:
-            st.write("Thesis: " + str(int(st.session_state.thesis_state)))
+            st.markdown("**Thesis:** " + str(int(st.session_state.thesis_state))+ "/5")
         if "credits_state" in st.session_state:
-            st.write("Credits: " + str(int(st.session_state.credits_state)))
+            st.markdown("**Credits:** " + str(int(st.session_state.credits_state))+ "/45 C")
 
         if st.session_state.current_semester == 1:
             st.markdown("#### Semestr 1")
@@ -380,7 +390,7 @@ def end_game():
 
 def main():
 
-    col1,col2 = st.columns([10,1])
+    col1,col2 = st.columns([5,1])
     if col2.button("Reset"):
         reset_game()
 
