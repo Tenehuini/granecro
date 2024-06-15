@@ -116,9 +116,9 @@ def show_playground(context, main_content=False, message = ""):
             st.markdown("**Credits:** " + str(int(st.session_state.credits_state))+ "/45 C")
 
         if st.session_state.current_semester == 1:
-            st.markdown("#### Semestr 1")
+            st.markdown("###### Semester 1")
         else:
-            st.markdown("##### Semestr 1")
+            st.markdown("###### Semester 1")
 
         #st.image(ci_path + "back.png", width=100)
         img_base64 = image_to_base64(ci_path + "back.png")
@@ -129,24 +129,24 @@ def show_playground(context, main_content=False, message = ""):
             image_string = f"<image src='data:image/jpeg;base64,{img_base64}' width='50'/>"
 
         st.html(image_string)
-        st.markdown(f"Cards {len(st.session_state.s1)}")
+        st.markdown(f"Cards: {len(st.session_state.s1)}")
 
         if st.session_state.current_semester == 2:
-            st.markdown("#### Semestr 2")
+            st.markdown("###### Semester 2")
         else:
-            st.markdown("##### Semestr 2")
+            st.markdown("###### Semester 2")
         #st.image(ci_path + "back.png", width=100)
 
-        if len(st.session_state.s2) == 0:
+        if len(st.session_state.s2) == 0 or st.session_state.current_semester == 1:
             image_string = f"<image src='data:image/jpeg;base64,{img_base64}' style='opacity: 0.3;' width='50'/>"
         else:
             image_string = f"<image src='data:image/jpeg;base64,{img_base64}' width='50'/>"
 
         st.html(image_string)
         if len(st.session_state.s2) == 12:
-            st.markdown(f"Cards {len(st.session_state.s2)} [FULL]")
+            st.markdown(f"Cards: {len(st.session_state.s2)} [FULL]")
         else:
-            st.markdown(f"Cards {len(st.session_state.s2)}")
+            st.markdown(f"Cards: {len(st.session_state.s2)}")
 
     with col2:
         if main_content:
