@@ -62,7 +62,7 @@ def check_magic_prerequisities(p):
         #st.write("Magic is enough.")
         return True
     else:
-        st.write(f"Magic is NOT enough for {p}. You know {st.session_state.magic_state}" ) # + str(len(checked)) + str(len(p))
+        st.write(f"Your magic is NOT enough for this course, it needs {p}. You know  just {st.session_state.magic_state}" ) # + str(len(checked)) + str(len(p))
         return False
 
 def check_course_level_prerequisites(l):
