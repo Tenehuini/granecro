@@ -72,12 +72,12 @@ def check_magic_prerequisities(p):
     else:
         present_magic = st.session_state.magic_state
         if len(present_magic) == 0:
-            present_magic = "nothing."
+            present_magic = "nothing"
         else:
-            present_magic = ",".join([magic_to_word(x) for x in present_magic])
+            present_magic = ", ".join([magic_to_word(x) for x in present_magic])
 
         st.write(f"Your magic is not enough for this course, it needs "
-                 f"{','.join([magic_to_word(x) for x in p])}. You know just {present_magic}" ) # + str(len(checked)) + str(len(p))
+                 f"{', '.join([magic_to_word(x) for x in p])}. You know just {present_magic}." ) # + str(len(checked)) + str(len(p))
         return False
 
 def check_course_level_prerequisites(l):
