@@ -14,7 +14,7 @@ ci_suffix = ".tiff"
 
 data = pd.read_csv("granecro-cards.csv", sep=";").fillna("")
 
-# st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
+st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
 #st.dataframe(data)
 
 
@@ -68,17 +68,25 @@ def check_magic_prerequisities(p):
 def check_course_level_prerequisites(l):
 
     #return True
-
-    learned_courses = st.session_state.s[1]['courses'] + st.session_state.s[1]['courses']
-    learned_levels = []
-    for c in learned_courses:
-        #st.write(c)
-        learned_levels.append(data.loc[c[0]]['level'])
-    if l in learned_levels or l == "":
+    if l=="":
         return True
     else:
-        st.write(f"You don't have prerequisite {l}.")
-        return False
+        if l in st.session_state.course_level_state:
+            return True
+        else:
+            st.write(f"You don't have prerequisite {l}.")
+            return False
+
+    # learned_courses = st.session_state.s[1]['courses'] + st.session_state.s[1]['courses']
+    # learned_levels = []
+    # for c in learned_courses:
+    #     #st.write(c)
+    #     learned_levels.append(data.loc[c[0]]['level'])
+    # if l in learned_levels or l == "":
+    #     return True
+    # else:
+    #     st.write(f"You don't have prerequisite {l}.")
+    #     return False
 
 def effect_study_buddy(card_id, study_buddy_order):
     effects = data.loc[card_id]['study_buddy_'+str(study_buddy_order)+'_effect'].split(",")
@@ -234,6 +242,7 @@ def start_game():
     st.session_state.thesis_state = 0
     st.session_state.credits_state = 0
     st.session_state.magic_state = []
+    st.session_state.course_level_state = []
     st.session_state.s = {}
     st.session_state.s[1] = {}
     st.session_state.s[1]['courses'] = []
@@ -283,7 +292,7 @@ def use_card():
 
     actions = []
     # find possible actions
-    if (card_details['type'] == "course" and st.session_state.sanity - card_details['admittance_sanity_price'] > min_sanity-1
+    if (card_details['type'] == "course" and (st.session_state.sanity - card_details['admittance_sanity_price'] > min_sanity-1)
             and check_magic_prerequisities(card_details['admittance_magic_prerequisite'])
             and check_course_level_prerequisites(card_details['admittance_course_level_prerequisite'])):
         actions.append('Admit yourself to course')
@@ -325,6 +334,9 @@ def use_card():
 
                 # add credits
                 st.session_state.credits_state += card_details['credits']
+
+                # add level
+                st.session_state.course_level_state.append(card_details['level'])
 
                 # add learned magic
                 if card_details['learning_effect'] != "":
