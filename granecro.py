@@ -310,7 +310,7 @@ def use_card():
     if (card_details['type'] == "course" and (st.session_state.sanity - card_details['admittance_sanity_price'] > min_sanity-1)
             and check_magic_prerequisities(card_details['admittance_magic_prerequisite'])
             and check_course_level_prerequisites(card_details['admittance_course_level_prerequisite'])):
-        actions.append('Enroll yourself to course')
+        actions.append('Enroll yourself to the course')
     elif card_details['type'] == "sanity_recovery" and st.session_state.sanity < 5:
         actions.append('Recover sanity point')
 
