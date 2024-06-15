@@ -60,11 +60,11 @@ def check_magic_prerequisities(p):
 
     def magic_to_word(x):
         if x == "W":
-            return "white"
+            return "light"
         elif x == "B":
-            return "black"
+            return "dark"
         elif x == "B/W":
-            return"black or white"
+            return"dark or light"
 
     if len(checked) == len(p):
         #st.write("Magic is enough.")
