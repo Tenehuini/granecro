@@ -375,7 +375,7 @@ def use_card():
 
 @st.experimental_dialog("End")
 def end_game():
-de
+
     if st.session_state.credits_state > 44 and st.session_state.sanity > -1 and st.session_state.thesis_state > 4:
         st.markdown("## You have won!")
         st.balloons()
