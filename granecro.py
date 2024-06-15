@@ -4,7 +4,7 @@ import time
 import base64
 import random
 
-
+st.set_page_config(layout="wide")
 
 ###########################################################################
 
