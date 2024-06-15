@@ -58,11 +58,26 @@ def check_magic_prerequisities(p):
                 learned_magic.remove(i2)
                 break
 
+    def magic_to_word(x):
+        if x == "W":
+            return "white"
+        elif x == "B":
+            return "black"
+        elif x == "B/W":
+            return"black or white"
+
     if len(checked) == len(p):
         #st.write("Magic is enough.")
         return True
     else:
-        st.write(f"Your magic is NOT enough for this course, it needs {p}. You know  just {st.session_state.magic_state}" ) # + str(len(checked)) + str(len(p))
+        present_magic = st.session_state.magic_state
+        if len(present_magic) == 0:
+            present_magic = "nothing."
+        else:
+            present_magic = ",".join([magic_to_word(x) for x in present_magic])
+
+        st.write(f"Your magic is not enough for this course, it needs "
+                 f"{','.join([magic_to_word(x) for x in p])}. You know just {present_magic}" ) # + str(len(checked)) + str(len(p))
         return False
 
 def check_course_level_prerequisites(l):
@@ -295,12 +310,12 @@ def use_card():
     if (card_details['type'] == "course" and (st.session_state.sanity - card_details['admittance_sanity_price'] > min_sanity-1)
             and check_magic_prerequisities(card_details['admittance_magic_prerequisite'])
             and check_course_level_prerequisites(card_details['admittance_course_level_prerequisite'])):
-        actions.append('Admit yourself to course')
+        actions.append('Enroll yourself to course')
     elif card_details['type'] == "sanity_recovery" and st.session_state.sanity < 5:
         actions.append('Recover sanity point')
 
     if card_details['type'] == "course" and st.session_state.current_semester == 1 and len(st.session_state.s2) < 12:
-        actions.append('Leave for next semester')
+        actions.append('Leave for the next semester')
 
     if len(st.session_state.s[st.session_state.current_semester]['courses']) > 0 and card_details['type']!="tired":
         for item in st.session_state.s[st.session_state.current_semester]['courses']:
@@ -324,7 +339,7 @@ def use_card():
         if st.button("Execute Action"):
             st.write(f"Executing {action}...")
             # Add the logic for each action here
-            if action == "Admit yourself to course":
+            if action == "Enroll yourself to course":
 
                 # ad card to semester courses with 0 study buddies
                 st.session_state.s[st.session_state.current_semester]['courses'].append(
@@ -342,7 +357,7 @@ def use_card():
                 if card_details['learning_effect'] != "":
                     st.session_state.magic_state.append(card_details['learning_effect'])
 
-                st.write(f"You have admitted to '{card_details['text']}' for {int(card_details['admittance_sanity_price'])} sanity points!")
+                st.write(f"You have enrolled to '{card_details['text']}' for {int(card_details['admittance_sanity_price'])} sanity points!")
                 time.sleep(1)
             elif "Raise Study Buddy" in action:
                 for_card = action.replace("Raise Study Buddy for ","")
@@ -366,7 +381,7 @@ def use_card():
                 st.session_state.thesis_state += 1
             elif action == "Recover sanity point":
                 st.session_state.sanity += 1
-            elif action == "Leave for next semester":
+            elif action == "Leave for the next semester":
                 st.session_state.s2.append(st.session_state.current_card)
 
             if len(st.session_state.s1) == 0:
