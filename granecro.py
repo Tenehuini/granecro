@@ -403,7 +403,7 @@ def end_game():
         st.markdown("## You have lost!")
     
         if st.session_state.credits_state < 45:
-            st.markdown(f"You got insufficient credits ({st.session_state.credits_state})
+            st.markdown(f"You got insufficient credits ({st.session_state.credits_state}")
         if st.session_state.thesis_state < 5:
             st.markdown(f"Your thesis is not finished")
         if st.session_state.sanity < 0:
