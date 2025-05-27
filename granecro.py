@@ -400,27 +400,24 @@ def use_card():
                 st.session_state.current_state = "turn card"
 
 
-@st.experimental_dialog("End")
+@st.dialog("End")
 def end_game():
-
-    if st.session_state.credits_state > 44 and st.session_state.sanity > -1 and st.session_state.thesis_state > 4:
+    if st.session_state.credits_state >= 45 and st.session_state.sanity >= 0 and st.session_state.thesis_state == 5:
         st.markdown("## You have won!")
         st.balloons()
     else:
         st.markdown("## You have lost!")
-
-    if st.session_state.thesis_state >= 5:
-        st.session_state.thesis_state = "finished"
-
-    st.markdown(f"You got {int(st.session_state.credits_state)} credits, while having  ")
-    st.markdown(f"thesis in stage {st.session_state.thesis_state} and sanity {int(st.session_state.sanity)}.")
-
+    
+        if st.session_state.credits_state < 45:
+            st.markdown(f"You got insufficient credits ({st.session_state.credits_state})
+        if st.session_state.thesis_state < 5:
+            st.markdown(f"Your thesis is not finished")
+        if st.session_state.sanity < 0:
+            st.markdown(f"You are insane")
     st.write("Game over. Thank you for playing!")
 
 
-
 def main():
-
     col1,col2 = st.columns([5,1])
     if col2.button("Reset"):
         reset_game()
@@ -437,19 +434,17 @@ def main():
             #st.rerun()
 
     elif st.session_state.current_state == "turn card":
-
-
         if st.button("Turn Card"):
             st.write("Turning card ...")
             time.sleep(5)
-
+            
         show_playground("Turn Card", message="It's time to turn a card!")
         turn_card()
 
 
     elif st.session_state.current_state == "use card":
         show_playground("Use Card", main_content=use_card, message="Choose action for the card")
-
+        
         if st.session_state.current_state == "turn card":
             st.write("Returning to 'Turn Card' state...")
             time.sleep(1)
