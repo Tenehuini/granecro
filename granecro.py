@@ -36,7 +36,6 @@ def image_to_base64(image_path):
 
 
 def check_magic_prerequisities(p):
-
     if p == "":
         return True # no magic prerequisites
     #return True
@@ -300,11 +299,11 @@ def use_card():
 
     actions = []
     # find possible actions
-    if (card_details['type'] == "course" and (st.session_state.sanity - card_details['admittance_sanity_price'] > MIN_SANITY-1)
+    if (card_details['type'] == "course" and (st.session_state.sanity - card_details['admittance_sanity_price'] >= MIN_SANITY)
             and check_magic_prerequisities(card_details['admittance_magic_prerequisite'])
             and check_course_level_prerequisites(card_details['admittance_course_level_prerequisite'])):
         actions.append('Enroll yourself to the course')
-    elif card_details['type'] == "sanity_recovery" and st.session_state.sanity < 5:
+    elif card_details['type'] == "sanity_recovery" and st.session_state.sanity < MAX_SANITY:
         actions.append('Recover sanity point')
 
     if card_details['type'] == "course" and st.session_state.current_semester == 1 and len(st.session_state.s2) < 12:
@@ -393,9 +392,8 @@ def use_card():
                 st.session_state.current_state = "turn card"
 
 
-@st.experimental_dialog("End")
+@st.dialog("End")
 def end_game():
-
     if st.session_state.credits_state > 44 and st.session_state.sanity >= 0 and st.session_state.thesis_state > 4:
         st.markdown("## You have won!")
         st.balloons()
