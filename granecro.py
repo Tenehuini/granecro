@@ -6,7 +6,6 @@ import random
 
 #st.set_page_config(layout="wide")
 
-
 ###########################################################################
 
 ci_path = "images/"
@@ -17,22 +16,16 @@ data = pd.read_csv("granecro-cards.csv", sep=";").fillna("")
 #st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
 #st.dataframe(data)
 
-
-
 ##########################################################################
 
 st.logo(ci_path+"ginlogo.png",link="https://bulgur007.itch.io/graduate-in-necromancy")
-#st.header("Test")
 st.markdown("# Graduate in Necromancy! <span style='font-size:12px'>by <a href='https://bulgur007.itch.io/graduate-in-necromancy'>Bulgur007, read the rules here</a></span>  ", unsafe_allow_html=True)
 #st.markdown("by [Bulgur007](https://bulgur007.itch.io/graduate-in-necromancy)")
 
-
 ###########################################################################
-# hard params
 
-max_sanity = 5
-min_sanity = -2
-
+MAX_SANITY = 5
+MIN_SANITY = -2
 
 ###########################################################################
 # support functions
@@ -307,7 +300,7 @@ def use_card():
 
     actions = []
     # find possible actions
-    if (card_details['type'] == "course" and (st.session_state.sanity - card_details['admittance_sanity_price'] > min_sanity-1)
+    if (card_details['type'] == "course" and (st.session_state.sanity - card_details['admittance_sanity_price'] > MIN_SANITY-1)
             and check_magic_prerequisities(card_details['admittance_magic_prerequisite'])
             and check_course_level_prerequisites(card_details['admittance_course_level_prerequisite'])):
         actions.append('Enroll yourself to the course')
@@ -389,8 +382,8 @@ def use_card():
                     st.session_state.sanity += 3
                 st.session_state.current_semester = 2
 
-                if st.session_state.sanity > max_sanity:
-                    st.session_state.sanity = max_sanity
+                if st.session_state.sanity > MAX_SANITY:
+                    st.session_state.sanity = MAX_SANITY
 
                 random.shuffle(st.session_state.s2)
 
@@ -400,10 +393,10 @@ def use_card():
                 st.session_state.current_state = "turn card"
 
 
-@st.experimental_dialog("End")
+@st.dialog("End")
 def end_game():
 
-    if st.session_state.credits_state > 44 and st.session_state.sanity > -1 and st.session_state.thesis_state > 4:
+    if st.session_state.credits_state > 44 and st.session_state.sanity >= 0 and st.session_state.thesis_state > 4:
         st.markdown("## You have won!")
         st.balloons()
     else:
@@ -418,9 +411,7 @@ def end_game():
     st.write("Game over. Thank you for playing!")
 
 
-
 def main():
-
     col1,col2 = st.columns([5,1])
     if col2.button("Reset"):
         reset_game()
