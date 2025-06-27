@@ -225,14 +225,6 @@ def deal_decks():
 
 
 def reset_game():
-    # st.session_state.game_started = False
-    # st.session_state.current_state = ""
-    # if "s1" in st.session_state:
-    #     del st.session_state.s1
-    # if "s2" in st.session_state:
-    #     del st.session_state.s2
-    # if "current_card" in st.session_state:
-    #     del st.session_state.current_card
     st.session_state.clear()
     st.write("I am resetting game.")
     time.sleep(1)
@@ -423,12 +415,10 @@ def main():
     if st.session_state.current_state == "start game":
         if st.button("Start Game"):
             start_game()
-            #st.rerun()
-
     elif st.session_state.current_state == "turn card":
         if st.button("Turn Card"):
             st.write("Turning card ...")
-            time.sleep(5)
+            time.sleep(3)
             
         show_playground("Turn Card", message="It's time to turn a card!")
         turn_card()
