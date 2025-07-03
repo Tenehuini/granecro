@@ -1,10 +1,23 @@
+from collections import namedtuple
 import pandas as pd
 import streamlit as st
 import time
 import base64
 import random
 
-#st.set_page_config(layout="wide")
+
+###########################################################################
+Card = namedtuple("Card", ["card_image",
+                           "card_type",
+                           "card_text",
+                           "card_level",
+                           "card_admittance_sanity_price",
+                           "card_admittance_course_level_prerequisite",
+                           "card_admittance_magic_prerequisite",
+                           "card_credits",
+                           "card_study_buddy_1_effect",
+                           "card_study_buddy_2_effect",
+                           "card_learning_effect"])
 
 ###########################################################################
 
