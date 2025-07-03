@@ -19,6 +19,8 @@ Card = namedtuple("Card", ["card_image",
                            "card_study_buddy_2_effect",
                            "card_learning_effect"])
 
+
+
 ###########################################################################
 
 ci_path = "images/"
@@ -406,11 +408,11 @@ def end_game():
         st.markdown("## You have lost!")
     
         if st.session_state.credits_state < 45:
-            st.markdown(f"You got insufficient credits ({st.session_state.credits_state}")
+            st.markdown(f"You got insufficient credits ({st.session_state.credits_state} credits and you need 45)"
         if st.session_state.thesis_state < 5:
             st.markdown(f"Your thesis is not finished")
         if st.session_state.sanity < 0:
-            st.markdown(f"You are insane")
+            st.markdown(f"You are insane (sanity < 0)")
     st.write("Game over. Thank you for playing!")
 
 
