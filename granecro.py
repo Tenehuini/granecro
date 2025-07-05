@@ -34,6 +34,7 @@ data = pd.read_csv("granecro-cards.csv", sep=";").fillna("")
 ##########################################################################
 
 st.logo(ci_path+"ginlogo.png",link="https://bulgur007.itch.io/graduate-in-necromancy")
+# st.html("<span style='font-size:36px'>Graduate in Necromancy! </span><span style='font-size:12px'>by <a href='https://bulgur007.itch.io/graduate-in-necromancy'>Bulgur007, read the rules here</a></span>")
 st.markdown("# Graduate in Necromancy! <span style='font-size:12px'>by <a href='https://bulgur007.itch.io/graduate-in-necromancy'>Bulgur007, read the rules here</a></span>  ", unsafe_allow_html=True)
 #st.markdown("by [Bulgur007](https://bulgur007.itch.io/graduate-in-necromancy)")
 
@@ -41,6 +42,12 @@ st.markdown("# Graduate in Necromancy! <span style='font-size:12px'>by <a href='
 
 MAX_SANITY = 5
 MIN_SANITY = -2
+
+POINTS_LEVEL_EASY = 35
+POINTS_LEVEL_MEDIUM = 40
+POINTS_LEVEL_HARD = 45
+
+level = POINTS_LEVEL_EASY
 
 ###########################################################################
 # support functions
@@ -72,6 +79,7 @@ def check_magic_prerequisities(p):
             return "dark"
         elif x == "B/W":
             return"dark or light"
+        return None
 
     if len(checked) == len(p):
         #st.write("Magic is enough.")
@@ -129,8 +137,7 @@ def effect_study_buddy(card_id, study_buddy_order):
 # UI
 
 
-def show_playground(context, main_content=False, message = ""):
-    #st.write("Playground context: " + context)
+def show_playground(message = "", main_content=None):
     if message!= "":
         st.markdown("<center>"+message, unsafe_allow_html=True)
         st.markdown("", unsafe_allow_html=True)
@@ -183,6 +190,7 @@ def show_playground(context, main_content=False, message = ""):
             main_content()
         else:
             st.html("<div style='height:280px;'></div>")
+        # st.html("<div style='height:280px;'></div>")
 
         if len(st.session_state.s[1]['courses']) > 0:
             s1_col_num  = len(st.session_state.s[1]['courses']) + 1
@@ -241,7 +249,7 @@ def deal_decks():
 
 def reset_game():
     st.session_state.clear()
-    st.write("I am resetting game.")
+    st.write("Resetting the game...")
     time.sleep(1)
     st.rerun()
 
@@ -257,12 +265,15 @@ def start_game():
     st.session_state.credits_state = 0
     st.session_state.magic_state = []
     st.session_state.course_level_state = []
-    st.session_state.s = {}
-    st.session_state.s[1] = {}
-    st.session_state.s[1]['courses'] = []
-
-    st.session_state.s[2] = {}
-    st.session_state.s[2]['courses'] = []
+    st.session_state.s = {
+        1: {'courses': []},
+        2: {'courses': []},
+    }
+    # st.session_state.s = {}
+    # st.session_state.s[1] = {}
+    # st.session_state.s[1]['courses'] = []
+    # st.session_state.s[2] = {}
+    # st.session_state.s[2]['courses'] = []
 
     st.session_state.current_semester = 1
 
@@ -408,7 +419,7 @@ def end_game():
         st.markdown("## You have lost!")
     
         if st.session_state.credits_state < 45:
-            st.markdown(f"You got insufficient credits ({st.session_state.credits_state} credits and you need 45)"
+            st.markdown(f"You got insufficient credits ({int(st.session_state.credits_state)} credits and you need 45)")
         if st.session_state.thesis_state < 5:
             st.markdown(f"Your thesis is not finished")
         if st.session_state.sanity < 0:
@@ -417,7 +428,7 @@ def end_game():
 
 
 def main():
-    col1,col2 = st.columns([5,1])
+    col1, col2 = st.columns([5,1])
     if col2.button("Reset"):
         reset_game()
 
@@ -435,12 +446,12 @@ def main():
             st.write("Turning card ...")
             time.sleep(3)
             
-        show_playground("Turn Card", message="It's time to turn a card!")
+        show_playground(message="It's time to turn a card!")
         turn_card()
 
 
     elif st.session_state.current_state == "use card":
-        show_playground("Use Card", main_content=use_card, message="Choose action for the card")
+        show_playground(message="Choose action for the card", main_content=use_card)
         
         if st.session_state.current_state == "turn card":
             st.write("Returning to 'Turn Card' state...")
