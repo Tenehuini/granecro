@@ -35,7 +35,7 @@ ci_suffix = ".tiff"
 data = pd.read_csv("granecro-cards.csv", sep=";").fillna("")
 
 # for debugging purposes
-st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
+# st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
 # st.dataframe(data)
 
 ##########################################################################
