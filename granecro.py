@@ -1,9 +1,15 @@
 from collections import namedtuple
+import base64
 import pandas as pd
+import random
 import streamlit as st
 import time
-import base64
-import random
+
+# so the user can't click the execute action button more than once
+if 'execute_button' in st.session_state and st.session_state.execute_button == True:
+    st.session_state.running = True
+else:
+    st.session_state.running = False
 
 
 ###########################################################################
@@ -28,8 +34,9 @@ ci_suffix = ".tiff"
 
 data = pd.read_csv("granecro-cards.csv", sep=";").fillna("")
 
-#st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
-#st.dataframe(data)
+# for debugging purposes
+st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
+# st.dataframe(data)
 
 ##########################################################################
 
@@ -39,7 +46,6 @@ st.markdown("# Graduate in Necromancy! <span style='font-size:12px'>by <a href='
 #st.markdown("by [Bulgur007](https://bulgur007.itch.io/graduate-in-necromancy)")
 
 ###########################################################################
-
 MAX_SANITY = 5
 MIN_SANITY = -2
 
@@ -47,9 +53,8 @@ POINTS_LEVEL_EASY = 35
 POINTS_LEVEL_MEDIUM = 40
 POINTS_LEVEL_HARD = 45
 
-level = POINTS_LEVEL_EASY
-
 ###########################################################################
+
 # support functions
 def image_to_base64(image_path):
     with open(image_path, "rb") as img_file:
@@ -95,9 +100,8 @@ def check_magic_prerequisities(p):
                  f"{', '.join([magic_to_word(x) for x in p])}. You learned {present_magic}." ) # + str(len(checked)) + str(len(p))
         return False
 
-def check_course_level_prerequisites(l):
 
-    #return True
+def check_course_level_prerequisites(l):
     if l=="":
         return True
     else:
@@ -107,16 +111,6 @@ def check_course_level_prerequisites(l):
             st.write(f"You don't have prerequisite {l}.")
             return False
 
-    # learned_courses = st.session_state.s[1]['courses'] + st.session_state.s[1]['courses']
-    # learned_levels = []
-    # for c in learned_courses:
-    #     #st.write(c)
-    #     learned_levels.append(data.loc[c[0]]['level'])
-    # if l in learned_levels or l == "":
-    #     return True
-    # else:
-    #     st.write(f"You don't have prerequisite {l}.")
-    #     return False
 
 def effect_study_buddy(card_id, study_buddy_order):
     effects = data.loc[card_id]['study_buddy_'+str(study_buddy_order)+'_effect'].split(",")
@@ -128,18 +122,19 @@ def effect_study_buddy(card_id, study_buddy_order):
         if etype == "@":
             st.session_state.sanity += count
         elif etype == "T":
-            st.session_state.thesis_state += count
+            if st.session_state.thesis_state + count < 5:
+                st.session_state.thesis_state += count
+            else:
+                st.session_state.thesis_state = 5
         elif etype == "C":
             st.session_state.credits_state += count
 
-
 ###########################################################################
+
 # UI
-
-
 def show_playground(message = "", main_content=None):
     if message!= "":
-        st.markdown("<center>"+message, unsafe_allow_html=True)
+        st.markdown("<center>"+message+"</center>", unsafe_allow_html=True)
         st.markdown("", unsafe_allow_html=True)
 
     col1, col2 = st.columns([1, 5])
@@ -152,33 +147,20 @@ def show_playground(message = "", main_content=None):
         if "credits_state" in st.session_state:
             st.markdown("**Credits:** " + str(int(st.session_state.credits_state))+ "/45 C")
 
-        if st.session_state.current_semester == 1:
-            st.markdown("###### Semester 1")
-        else:
-            st.markdown("###### Semester 1")
-
-        #st.image(ci_path + "back.png", width=100)
+        st.markdown("###### Semester 1")
         img_base64 = image_to_base64(ci_path + "back.png")
-
         if len(st.session_state.s1) == 0:
             image_string = f"<image src='data:image/jpeg;base64,{img_base64}' style='opacity: 0.3;' width='50'/>"
         else:
             image_string = f"<image src='data:image/jpeg;base64,{img_base64}' width='50'/>"
-
         st.html(image_string)
         st.markdown(f"Cards: {len(st.session_state.s1)}")
 
-        if st.session_state.current_semester == 2:
-            st.markdown("###### Semester 2")
-        else:
-            st.markdown("###### Semester 2")
-        #st.image(ci_path + "back.png", width=100)
-
+        st.markdown("###### Semester 2")
         if len(st.session_state.s2) == 0 or st.session_state.current_semester == 1:
             image_string = f"<image src='data:image/jpeg;base64,{img_base64}' style='opacity: 0.3;' width='50'/>"
         else:
             image_string = f"<image src='data:image/jpeg;base64,{img_base64}' width='50'/>"
-
         st.html(image_string)
         if len(st.session_state.s2) == 12:
             st.markdown(f"Cards: {len(st.session_state.s2)} [FULL]")
@@ -190,7 +172,6 @@ def show_playground(message = "", main_content=None):
             main_content()
         else:
             st.html("<div style='height:280px;'></div>")
-        # st.html("<div style='height:280px;'></div>")
 
         if len(st.session_state.s[1]['courses']) > 0:
             s1_col_num  = len(st.session_state.s[1]['courses']) + 1
@@ -206,10 +187,6 @@ def show_playground(message = "", main_content=None):
             for i,item in enumerate(st.session_state.s[1]['courses'],1):
                 image = data.loc[item[0]]['image']
                 s1_cols[i].image(ci_path + image + ci_suffix, width=150)
-
-                #img_base64 = image_to_base64(ci_path + image + ci_suffix)
-                #image_string = f"<image src='data:image/jpeg;base64,{img_base64}' width='150'/>"
-                #s1_cols[i].html(image_string)
 
                 if item[1] > 0:
                     image_string = ""
@@ -240,26 +217,29 @@ def show_playground(message = "", main_content=None):
                         image_string += f"<image src='data:image/jpeg;base64,{img_base64}' width='40'/>"
                     s2_cols[i].html(image_string)
 
-
 ############################################################################
+
 def deal_decks():
     st.session_state.s1 = list(data.sample(12).index)
     st.session_state.s2 = list(data[~data.index.isin(st.session_state.s1)].index)
+    random.shuffle(st.session_state.s2)
 
 
 def reset_game():
     st.session_state.clear()
     st.write("Resetting the game...")
-    time.sleep(1)
+    time.sleep(2)
     st.rerun()
 
 
 def start_game():
     st.session_state.game_started = True
     st.session_state.current_state = "turn card"
+    deal_decks()
+
     st.write("Game started! Click 'Turn Card' to begin.")
 
-    deal_decks()
+    st.session_state.current_semester = 1
     st.session_state.sanity = 3
     st.session_state.thesis_state = 0
     st.session_state.credits_state = 0
@@ -269,20 +249,10 @@ def start_game():
         1: {'courses': []},
         2: {'courses': []},
     }
-    # st.session_state.s = {}
-    # st.session_state.s[1] = {}
-    # st.session_state.s[1]['courses'] = []
-    # st.session_state.s[2] = {}
-    # st.session_state.s[2]['courses'] = []
-
-    st.session_state.current_semester = 1
-
-    # time.sleep(2)
     st.rerun()
 
 
 def turn_card():
-    # st.write("It's time to turn a card!")
     st.session_state.current_state = "use card"
 
     if len(st.session_state.s1) > 0:
@@ -294,20 +264,12 @@ def turn_card():
 
 
 def use_card():
-    #st.write("Choose an action for the card:")
-
     c1use, c2use = st.columns(2)
 
     with c1use:
         if "current_card" in st.session_state:
-            #st.write(f"{st.session_state.current_card}")
             card_image_file = data.loc[st.session_state.current_card]['image']
             st.image(ci_path + card_image_file + ci_suffix, width=200)
-
-            #img_base64 = image_to_base64(ci_path + card_image_file + ci_suffix)
-            #image_string = f"<image src='data:image/jpeg;base64,{img_base64}' width='200'>"
-            #st.html(image_string)
-
         else:
             st.write("No card ?")
             st.stop()
@@ -317,20 +279,25 @@ def use_card():
 
     actions = []
     # find possible actions
-    if (card_details['type'] == "course" and (st.session_state.sanity - card_details['admittance_sanity_price'] >= MIN_SANITY)
+    if (card_details['type'] == "sanity_recovery"
+          and st.session_state.sanity < MAX_SANITY):
+        actions.append('Recover sanity point')
+
+    if (card_details['type'] == "course"
+            and (st.session_state.sanity - card_details['admittance_sanity_price'] >= MIN_SANITY)
             and check_magic_prerequisities(card_details['admittance_magic_prerequisite'])
             and check_course_level_prerequisites(card_details['admittance_course_level_prerequisite'])):
         actions.append('Enroll yourself to the course')
-    elif card_details['type'] == "sanity_recovery" and st.session_state.sanity < MAX_SANITY:
-        actions.append('Recover sanity point')
 
-    if card_details['type'] == "course" and st.session_state.current_semester == 1 and len(st.session_state.s2) < 12:
+    if (card_details['type'] == "course"
+            and st.session_state.current_semester == 1
+            and len(st.session_state.s2) < 12):
         actions.append('Leave for the next semester')
 
-    if len(st.session_state.s[st.session_state.current_semester]['courses']) > 0 and card_details['type']!="tired":
+    if (len(st.session_state.s[st.session_state.current_semester]['courses']) > 0
+            and card_details['type'] != "tired"):
         for item in st.session_state.s[st.session_state.current_semester]['courses']:
             cd = dict(data.loc[item[0]])
-            #st.write(cd)
             buddy_slots = 0
             if cd['study_buddy_1_effect'] != "":
                 buddy_slots += 1
@@ -345,21 +312,18 @@ def use_card():
     actions.append("Just discard")
 
     with c2use:
-        action = st.selectbox("Select an action", actions)  # , on_change=st.rerun()
-        if st.button("Execute Action"):
+        action = st.selectbox("Select an action", actions)
+        if st.button("Execute Action", disabled=st.session_state.get("running", False), key="execute_button"):
             st.write(f"Executing {action}...")
             # Add the logic for each action here
             if action == "Enroll yourself to the course":
-
-                # ad card to semester courses with 0 study buddies
+                # add card to semester courses with 0 study buddies
                 st.session_state.s[st.session_state.current_semester]['courses'].append(
                     (st.session_state.current_card, 0))
                 # change sanity
                 st.session_state.sanity += - int(card_details['admittance_sanity_price'])
-
                 # add credits
                 st.session_state.credits_state += card_details['credits']
-
                 # add level
                 st.session_state.course_level_state.append(card_details['level'])
 
@@ -368,7 +332,7 @@ def use_card():
                     st.session_state.magic_state.append(card_details['learning_effect'])
 
                 st.write(f"You have enrolled to '{card_details['text']}' for {int(card_details['admittance_sanity_price'])} sanity points!")
-                time.sleep(1)
+                time.sleep(2)
             elif "Raise Study Buddy" in action:
                 for_card = action.replace("Raise Study Buddy for ","")
                 card_id = data.index[data["text"] == for_card].tolist()[0]
@@ -402,24 +366,26 @@ def use_card():
                 if st.session_state.sanity > MAX_SANITY:
                     st.session_state.sanity = MAX_SANITY
 
-                random.shuffle(st.session_state.s2)
-
             if len(st.session_state.s2) == 0:
                 st.session_state.current_state = "end game"
             else:
-                st.session_state.current_state = "turn card"
+                turn_card()
+                st.rerun()
+                # st.session_state.current_state = "turn card"
 
 
 @st.dialog("End")
 def end_game():
-    if st.session_state.credits_state > 44 and st.session_state.sanity >= 0 and st.session_state.thesis_state > 4:
+    if (st.session_state.credits_state >= st.session_state.difficulty
+            and st.session_state.sanity >= 0
+            and st.session_state.thesis_state == 5):
         st.markdown("## You have won!")
         st.balloons()
     else:
         st.markdown("## You have lost!")
     
-        if st.session_state.credits_state < 45:
-            st.markdown(f"You got insufficient credits ({int(st.session_state.credits_state)} credits and you need 45)")
+        if st.session_state.credits_state < st.session_state.difficulty:
+            st.markdown(f"You got insufficient credits ({int(st.session_state.credits_state)} credits and you need {int(st.session_state.difficulty)})")
         if st.session_state.thesis_state < 5:
             st.markdown(f"Your thesis is not finished")
         if st.session_state.sanity < 0:
@@ -428,8 +394,15 @@ def end_game():
 
 
 def main():
-    col1, col2 = st.columns([5,1])
-    if col2.button("Reset"):
+    col1, col2, col3 = st.columns(3)
+
+    difficulties = ["Hard (45 points)", "Medium (40 points)", "Easy (35 points)"]
+    if (not st.session_state.get("current_state")
+            or st.session_state.current_state in ("start game", "turn card")):
+        with col2:
+            action = st.selectbox("Difficulty", difficulties)
+
+    if col3.button("Reset", key="Reset"):
         reset_game()
 
     if 'game_started' not in st.session_state:
@@ -439,7 +412,13 @@ def main():
         st.session_state.current_state = "start game"
 
     if st.session_state.current_state == "start game":
-        if st.button("Start Game"):
+        if col1.button("Start Game"):
+            if action == "Hard (45 points)":
+                st.session_state.difficulty = POINTS_LEVEL_HARD
+            elif action == "Medium (40 points)":
+                st.session_state.difficulty = POINTS_LEVEL_MEDIUM
+            else:    
+                st.session_state.difficulty = POINTS_LEVEL_EASY
             start_game()
     elif st.session_state.current_state == "turn card":
         if st.button("Turn Card"):
@@ -448,8 +427,6 @@ def main():
             
         show_playground(message="It's time to turn a card!")
         turn_card()
-
-
     elif st.session_state.current_state == "use card":
         show_playground(message="Choose action for the card", main_content=use_card)
         
@@ -459,8 +436,6 @@ def main():
             st.rerun()
         elif st.session_state.current_state == "end game":
             end_game()
-            #st.rerun()
-
     elif st.session_state.current_state == "end game":
         end_game()
 

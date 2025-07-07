@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/granecro.iml" filepath="$PROJECT_DIR$/.idea/granecro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../onirim-python/.idea/onirim-python.iml" filepath="$PROJECT_DIR$/../onirim-python/.idea/onirim-python.iml" />
     </modules>
   </component>
 </project>

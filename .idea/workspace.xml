@@ -7,8 +7,10 @@
     <list default="true" id="00055c83-dab5-4fe9-8a60-5cf336bdbac3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/granecro.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/granecro.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/granecro.py" beforeDir="false" afterPath="$PROJECT_DIR$/granecro.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +43,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -61,7 +64,9 @@
       <updated>1751635917833</updated>
       <workItem from="1751635919027" duration="606000" />
       <workItem from="1751636989883" duration="11000" />
-      <workItem from="1751637676288" duration="3673000" />
+      <workItem from="1751637676288" duration="7585000" />
+      <workItem from="1751740793892" duration="9863000" />
+      <workItem from="1751895990440" duration="667000" />
     </task>
     <servers />
   </component>
