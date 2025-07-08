@@ -25,6 +25,28 @@ Card = namedtuple("Card", ["card_image",
                            "card_study_buddy_2_effect",
                            "card_learning_effect"])
 
+cards = [
+    Card('C1 (Small)', 'course', 'Abyssal language', 'C', 1, '', '', 2, '', '', 'B'),
+    Card('C2 (Small)', 'course', 'Heraldry of the Astrals', 'C', 1, '', '', 2, '', '', ''),
+    Card('C3 (Small)', 'course', 'Holy animals', 'C', 1, '', '', 2, '', '', 'W'),
+    Card('A2 (Small)', 'course', 'History of the Void', 'A2', 3, '', '', 10, '2@', '', 'B'),
+    Card('A3 (Small)', 'course', 'Advanced blood rituals', 'A', 3, '', '', 10, '1@', '1C,1T,1@', 'B/W'),
+    Card('A4 (Small)', 'course', 'Transference of life', 'A', 3, '', 'W,W,B,B', 12, '3C', '', 'B/W'),
+    Card('A1 (Small)', 'course', 'Speaking with the dead', 'A1', 3, '', '', 10, '2C', '', 'W'),
+    Card('B9 (Small)', 'course', 'Sould mending', 'B', 2, 'A1', '', 5, '2@', '1T,1C', 'W'),
+    Card('B1 (Small)', 'course', 'Conjuring spirit knights', 'B', 2, '', 'W', 5, '2C', '', 'W'),
+    Card('B2 (Small)', 'course', 'Poison brewing', 'B', 2, '', 'B', 5, '1C', '1C,1T', 'B'),
+    Card('B3 (Small)', 'course', 'Spellbook writing', 'B', 2, '', '', 5, '1C', '1C', ''),
+    Card('B4 (Small)', 'course', 'Practice: Magic staffs', 'B', 2, '', 'W,B', 5, '1@', '1C,1@', 'B/W'),
+    Card('B5 (Small)', 'course', 'Invoking shadowspawns', 'B', 2, 'A2', '', 5, '2@', '1C', 'B'),
+    Card('B6 (Small)', 'course', 'Defense against curses', 'B', 2, '', 'B,W,W', 7, '2C', '', 'W'),
+    Card('B7 (Small)', 'course', 'Drain spells seminar', 'B', 2, '', 'B,B,W', 7, '1C,1T', '', 'B'),
+    Card('B8 (Small)', 'course', 'Graveyards of the realm', 'B', 2, '', '', 5, '1@', '', ''),
+    Card('Tired1 (Small)', 'tired', 'TIRED', '', '', '', '', '', '', '', ''),
+    Card('Tired2 (Small)', 'tired', 'TIRED', '', '', '', '', '', '', '', ''),
+    Card('Sanityboost1 (Small)', 'sanity_recovery', '@', '', '', '', '', '', '', '', ''),
+    Card('Sanityboost2 (Small)', 'sanity_recovery', '@', '', '', '', '', '', '', '', '')
+]
 
 
 ###########################################################################
@@ -32,7 +54,18 @@ Card = namedtuple("Card", ["card_image",
 ci_path = "images/"
 ci_suffix = ".tiff"
 
-data = pd.read_csv("granecro-cards.csv", sep=";").fillna("")
+data = pd.DataFrame(cards)
+data = data.rename(columns={'card_image': 'image',
+                            'card_type': 'type',
+                            'card_text': 'text',
+                            'card_level': 'level',
+                            'card_admittance_sanity_price': 'admittance_sanity_price',
+                            'card_admittance_course_level_prerequisite': 'admittance_course_level_prerequisite',
+                            'card_admittance_magic_prerequisite': 'admittance_magic_prerequisite',
+                            'card_credits': 'credits',
+                            'card_study_buddy_1_effect': 'study_buddy_1_effect',
+                            'card_study_buddy_2_effect': 'study_buddy_2_effect',
+                            'card_learning_effect': 'learning_effect'})
 
 # for debugging purposes
 # st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
