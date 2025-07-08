@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="00055c83-dab5-4fe9-8a60-5cf336bdbac3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.vscode/.advpl/_binary_class.prw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/.advpl/_binary_functions.prw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/granecro.py" beforeDir="false" afterPath="$PROJECT_DIR$/granecro.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/granecro-cards.csv" beforeDir="false" afterPath="$PROJECT_DIR$/granecro-cards.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +66,7 @@
       <workItem from="1751636989883" duration="11000" />
       <workItem from="1751637676288" duration="7585000" />
       <workItem from="1751740793892" duration="9863000" />
-      <workItem from="1751895990440" duration="2346000" />
+      <workItem from="1751895990440" duration="3604000" />
     </task>
     <servers />
   </component>

@@ -11,9 +11,9 @@ B1 (Small);course;Conjuring spirit knights;B;2;;W;5;2C;;W
 B2 (Small);course;Poison brewing;B;2;;B;5;1C;1C,1T;B
 B3 (Small);course;Spellbook writing;B;2;;;5;1C;1C;
 B4 (Small);course;Practice: Magic staffs;B;2;;W,B;5;1@;1C,1@;B/W
-B5 (Small);course;Invoking shadowspawns;B;2;A2;;5;2@;1C;
-B6 (Small);course;Defense against curses;B;2;;B,W,W;7;2C;;
-B7 (Small);course;Drain spells seminar;B;2;;B,B,W;7;1C,1T;;
+B5 (Small);course;Invoking shadowspawns;B;2;A2;;5;2@;1C;B
+B6 (Small);course;Defense against curses;B;2;;B,W,W;7;2C;;W
+B7 (Small);course;Drain spells seminar;B;2;;B,B,W;7;1C,1T;;B
 B8 (Small);course;Graveyards of the realm;B;2;;;5;1@;;
 Tired1 (Small);tired;TIRED;;;;;;;;
 Tired2 (Small);tired;TIRED;;;;;;;;
