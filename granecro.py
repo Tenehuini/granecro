@@ -5,12 +5,12 @@ import random
 import streamlit as st
 import time
 
+
 # so the user can't click the execute action button more than once
 if 'execute_button' in st.session_state and st.session_state.execute_button == True:
     st.session_state.running = True
 else:
     st.session_state.running = False
-
 
 ###########################################################################
 Card = namedtuple("Card", ["card_image",
@@ -48,9 +48,6 @@ cards = [
     Card('Sanityboost2 (Small)', 'sanity_recovery', '@', '', '', '', '', '', '', '', '')
 ]
 
-
-###########################################################################
-
 ci_path = "images/"
 ci_suffix = ".tiff"
 
@@ -71,14 +68,11 @@ data = data.rename(columns={'card_image': 'image',
 # st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
 # st.dataframe(data)
 
-##########################################################################
-
 st.logo(ci_path+"ginlogo.png",link="https://bulgur007.itch.io/graduate-in-necromancy")
 # st.html("<span style='font-size:36px'>Graduate in Necromancy! </span><span style='font-size:12px'>by <a href='https://bulgur007.itch.io/graduate-in-necromancy'>Bulgur007, read the rules here</a></span>")
 st.markdown("# Graduate in Necromancy! <span style='font-size:12px'>by <a href='https://bulgur007.itch.io/graduate-in-necromancy'>Bulgur007, read the rules here</a></span>  ", unsafe_allow_html=True)
 #st.markdown("by [Bulgur007](https://bulgur007.itch.io/graduate-in-necromancy)")
 
-###########################################################################
 MAX_SANITY = 5
 MIN_SANITY = -2
 
