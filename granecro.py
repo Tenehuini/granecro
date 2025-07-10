@@ -52,8 +52,7 @@ ci_path = "images/"
 ci_suffix = ".tiff"
 
 data = pd.DataFrame(cards)
-data = data.rename(columns={'card_image': 'image',
-                            'card_type': 'type',
+data = data.rename(columns={'card_type': 'type',
                             'card_text': 'text',
                             'card_level': 'level',
                             'card_admittance_sanity_price': 'admittance_sanity_price',
@@ -212,7 +211,7 @@ def show_playground(message = "", main_content=None):
             s1_cols[0].write("S1")
 
             for i,item in enumerate(st.session_state.s[1]['courses'],1):
-                image = data.loc[item[0]]['image']
+                image = data.loc[item[0]]['card_image']
                 s1_cols[i].image(ci_path + image + ci_suffix, width=150)
 
                 if item[1] > 0:
@@ -235,7 +234,7 @@ def show_playground(message = "", main_content=None):
             s2_cols[0].write("S2")
 
             for i, item in enumerate(st.session_state.s[2]['courses'],1):
-                image = data.loc[item[0]]['image']
+                image = data.loc[item[0]]['card_image']
                 s2_cols[i].image(ci_path + image + ci_suffix, width=150)
                 if item[1] > 0:
                     image_string = ""
@@ -249,7 +248,6 @@ def show_playground(message = "", main_content=None):
 def deal_decks():
     st.session_state.s1 = list(data.sample(12).index)
     st.session_state.s2 = list(data[~data.index.isin(st.session_state.s1)].index)
-    random.shuffle(st.session_state.s2)
 
 
 def reset_game():
@@ -295,7 +293,7 @@ def use_card():
 
     with c1use:
         if "current_card" in st.session_state:
-            card_image_file = data.loc[st.session_state.current_card]['image']
+            card_image_file = data.loc[st.session_state.current_card]['card_image']
             st.image(ci_path + card_image_file + ci_suffix, width=200)
         else:
             st.write("No card ?")
@@ -392,6 +390,8 @@ def use_card():
 
                 if st.session_state.sanity > MAX_SANITY:
                     st.session_state.sanity = MAX_SANITY
+                
+                random.shuffle(st.session_state.s2)
 
             if len(st.session_state.s2) == 0:
                 st.session_state.current_state = "end game"

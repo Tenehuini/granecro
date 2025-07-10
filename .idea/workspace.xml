@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="00055c83-dab5-4fe9-8a60-5cf336bdbac3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/granecro.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/granecro.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +48,6 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-PY-251.23774.444" />
         <option value="bundled-python-sdk-890ed5b35930-d9c5bdb153f4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.23774.444" />
       </set>
     </attachedChunks>
@@ -62,6 +64,7 @@
       <workItem from="1751637676288" duration="7585000" />
       <workItem from="1751740793892" duration="9863000" />
       <workItem from="1751895990440" duration="4399000" />
+      <workItem from="1752164376606" duration="23000" />
     </task>
     <servers />
   </component>
