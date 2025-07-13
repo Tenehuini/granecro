@@ -17,6 +17,7 @@ Card = namedtuple("Card", ["card_image",
                            "card_type",
                            "card_text",
                            "card_level",
+                           "card_admittance_thesis_price",
                            "card_admittance_sanity_price",
                            "card_admittance_course_level_prerequisite",
                            "card_admittance_magic_prerequisite",
@@ -25,31 +26,42 @@ Card = namedtuple("Card", ["card_image",
                            "card_study_buddy_2_effect",
                            "card_learning_effect"])
 
+
 cards = [
-    Card('C1 (Small)', 'course', 'Abyssal language', 'C', 1, '', '', 2, '', '', 'B'),
-    Card('C2 (Small)', 'course', 'Heraldry of the Astrals', 'C', 1, '', '', 2, '', '', ''),
-    Card('C3 (Small)', 'course', 'Holy animals', 'C', 1, '', '', 2, '', '', 'W'),
-    Card('A2 (Small)', 'course', 'History of the Void', 'A2', 3, '', '', 10, '2@', '', 'B'),
-    Card('A3 (Small)', 'course', 'Advanced blood rituals', 'A', 3, '', '', 10, '1@', '1C,1T,1@', 'B/W'),
-    Card('A4 (Small)', 'course', 'Transference of life', 'A', 3, '', 'W,W,B,B', 12, '3C', '', 'B/W'),
-    Card('A1 (Small)', 'course', 'Speaking with the dead', 'A1', 3, '', '', 10, '2C', '', 'W'),
-    Card('B9 (Small)', 'course', 'Sould mending', 'B', 2, 'A1', '', 5, '2@', '1T,1C', 'W'),
-    Card('B1 (Small)', 'course', 'Conjuring spirit knights', 'B', 2, '', 'W', 5, '2C', '', 'W'),
-    Card('B2 (Small)', 'course', 'Poison brewing', 'B', 2, '', 'B', 5, '1C', '1C,1T', 'B'),
-    Card('B3 (Small)', 'course', 'Spellbook writing', 'B', 2, '', '', 5, '1C', '1C', ''),
-    Card('B4 (Small)', 'course', 'Practice: Magic staffs', 'B', 2, '', 'W,B', 5, '1@', '1C,1@', 'B/W'),
-    Card('B5 (Small)', 'course', 'Invoking shadowspawns', 'B', 2, 'A2', '', 5, '2@', '1C', 'B'),
-    Card('B6 (Small)', 'course', 'Defense against curses', 'B', 2, '', 'B,W,W', 7, '2C', '', 'W'),
-    Card('B7 (Small)', 'course', 'Drain spells seminar', 'B', 2, '', 'B,B,W', 7, '1C,1T', '', 'B'),
-    Card('B8 (Small)', 'course', 'Graveyards of the realm', 'B', 2, '', '', 5, '1@', '', ''),
-    Card('Tired1 (Small)', 'tired', 'TIRED', '', '', '', '', '', '', '', ''),
-    Card('Tired2 (Small)', 'tired', 'TIRED', '', '', '', '', '', '', '', ''),
-    Card('Sanityboost1 (Small)', 'sanity_recovery', '@', '', '', '', '', '', '', '', ''),
-    Card('Sanityboost2 (Small)', 'sanity_recovery', '@', '', '', '', '', '', '', '', '')
+    Card('abyssal_language', 'course', 'Abyssal language', 'C', '', 1, '', '', 2, '', '', 'B'),
+    Card('heraldry_of_the_astrals', 'course', 'Heraldry of the Astrals', 'C', '', 1, '', '', 2, '', '', ''),
+    Card('holy_animals', 'course', 'Holy animals', 'C', '', 1, '', '', 2, '', '', 'W'),
+    Card('history_of_the_void', 'course', 'History of the Void', 'A2', '', 3, '', '', 10, '2@', '', 'B'),
+    Card('advanced_blood_rituals', 'course', 'Advanced blood rituals', 'A', '', 3, '', '', 10, '1@', '1C,1T,1@', 'B/W'),
+    Card('transference_of_life', 'course', 'Transference of life', 'A', '', 3, '', 'W,W,B,B', 12, '3C', '', 'B/W'),
+    Card('speaking_with_the_dead', 'course', 'Speaking with the dead', 'A1', '', 3, '', '', 10, '2C', '', 'W'),
+    Card('soul_mending', 'course', 'Sould mending', 'B', '', 2, 'A1', '', 5, '2@', '1T,1C', 'W'),
+    Card('conjuring_spirit_knights', 'course', 'Conjuring spirit knights', 'B', '', 2, '', 'W', 5, '2C', '', 'W'),
+    Card('poison_brewing', 'course', 'Poison brewing', 'B', '', 2, '', 'B', 5, '1C', '1C,1T', 'B'),
+    Card('spellbook_writing', 'course', 'Spellbook writing', 'B', '', 2, '', '', 5, '1C', '1C', ''),
+    Card('practice_magic_staffs', 'course', 'Practice: Magic staffs', 'B', '', 2, '', 'W,B', 5, '1@', '1C,1@', 'B/W'),
+    Card('invoking_shadowspawns', 'course', 'Invoking shadowspawns', 'B', '', 2, 'A2', '', 5, '2@', '1C', 'B'),
+    Card('defense_against_curses', 'course', 'Defense against curses', 'B', '', 2, '', 'B,W,W', 7, '2C', '', 'W'),
+    Card('drain_spell_seminar', 'course', 'Drain spells seminar', 'B', '', 2, '', 'B,B,W', 7, '1C,1T', '', 'B'),
+    Card('graveyards_of_the_realm', 'course', 'Graveyards of the realm', 'B', '', 2, '', '', 5, '1@', '', ''),
+    Card('tired', 'tired', 'TIRED', '', '', '', '', '', '', '', '', ''),
+    Card('tired', 'tired', 'TIRED', '', '', '', '', '', '', '', '', ''),
+    Card('sanity_boost', 'sanity_recovery', '@', '', '', '', '', '', '', '', '', ''),
+    Card('sanity_boost', 'sanity_recovery', '@', '', '', '', '', '', '', '', '', '')
 ]
 
-ci_path = "images/"
-ci_suffix = ".tiff"
+expansion_cards = [
+    Card('tired', 'tired', 'TIRED', '', '', '', '', '', '', '', '', ''),
+    Card('sigils_of_power', 'course', 'Sigils of power', 'W', 1, 1, '', '', 3, '2@', '', ''),
+    Card('banishing_the_undead', 'course', 'Banishing the undead', 'W', 1, 1, '', '', 3, '2C', '', 'W'),
+    Card('dream_invasion', 'course', 'Dream invasion', 'W', 1, 1, '', '', 3, '2C', '', 'B'),
+
+]
+
+# ci_path = "images/"
+# ci_suffix = ".tiff"
+ci_path = "img/"
+ci_suffix = ".png"
 
 data = pd.DataFrame(cards)
 data = data.rename(columns={'card_type': 'type',
@@ -70,7 +82,9 @@ data = data.rename(columns={'card_type': 'type',
 st.logo(ci_path+"ginlogo.png",link="https://bulgur007.itch.io/graduate-in-necromancy")
 # st.html("<span style='font-size:36px'>Graduate in Necromancy! </span><span style='font-size:12px'>by <a href='https://bulgur007.itch.io/graduate-in-necromancy'>Bulgur007, read the rules here</a></span>")
 st.markdown("# Graduate in Necromancy! <span style='font-size:12px'>by <a href='https://bulgur007.itch.io/graduate-in-necromancy'>Bulgur007, read the rules here</a></span>  ", unsafe_allow_html=True)
-#st.markdown("by [Bulgur007](https://bulgur007.itch.io/graduate-in-necromancy)")
+# st.markdown("by [Bulgur007](https://bulgur007.itch.io/graduate-in-necromancy)")
+
+MAX_THESIS = 5
 
 MAX_SANITY = 5
 MIN_SANITY = -2
@@ -113,7 +127,7 @@ def check_magic_prerequisities(p):
         return None
 
     if len(checked) == len(p):
-        #st.write("Magic is enough.")
+        # st.write("Magic is enough.")
         return True
     else:
         present_magic = st.session_state.magic_state
@@ -167,11 +181,11 @@ def show_playground(message = "", main_content=None):
 
     with col1:
         if "sanity" in st.session_state:
-            st.markdown("**Sanity:** " + str(int(st.session_state.sanity)) + "/5 @  ")
+            st.markdown(f"**Sanity:** {str(int(st.session_state.sanity))} / {MAX_SANITY}")
         if "thesis_state" in st.session_state:
-            st.markdown("**Thesis:** " + str(int(st.session_state.thesis_state))+ "/5  ")
+            st.markdown(f"**Thesis:** {str(int(st.session_state.thesis_state))} / {MAX_THESIS}")
         if "credits_state" in st.session_state:
-            st.markdown("**Credits:** " + str(int(st.session_state.credits_state))+ "/45 C")
+            st.markdown(f"**Credits:**  {str(int(st.session_state.credits_state))} / {st.session_state.difficulty}")
 
         st.markdown("###### Semester 1")
         img_base64 = image_to_base64(ci_path + "back.png")
@@ -424,10 +438,15 @@ def main():
     col1, col2, col3 = st.columns(3)
 
     difficulties = ["Hard (45 points)", "Medium (40 points)", "Easy (35 points)"]
+
     if (not st.session_state.get("current_state")
             or st.session_state.current_state in ("start game", "turn card")):
+    # if st.session_state.get("current_state") and st.session_state.current_state == "start game":
         with col2:
             action = st.selectbox("Difficulty", difficulties)
+            # expansion = st.selectbox("Use expansion?", use_expansion)
+            # st.button("Next")
+            # st.session_state.current_state = "select difficulty"
 
     if col3.button("Reset", key="Reset"):
         reset_game()
@@ -457,11 +476,7 @@ def main():
     elif st.session_state.current_state == "use card":
         show_playground(message="Choose action for the card", main_content=use_card)
         
-        if st.session_state.current_state == "turn card":
-            st.write("Returning to 'Turn Card' state...")
-            time.sleep(1)
-            st.rerun()
-        elif st.session_state.current_state == "end game":
+        if st.session_state.current_state == "end game":
             end_game()
     elif st.session_state.current_state == "end game":
         end_game()
