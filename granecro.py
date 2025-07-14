@@ -28,30 +28,30 @@ Card = namedtuple("Card", ["card_image",
 
 
 cards = [
-    Card('abyssal_language', 'course', 'Abyssal language', 'C', '', 1, '', '', 2, '', '', 'B'),
-    Card('heraldry_of_the_astrals', 'course', 'Heraldry of the Astrals', 'C', '', 1, '', '', 2, '', '', ''),
-    Card('holy_animals', 'course', 'Holy animals', 'C', '', 1, '', '', 2, '', '', 'W'),
-    Card('history_of_the_void', 'course', 'History of the Void', 'A2', '', 3, '', '', 10, '2@', '', 'B'),
-    Card('advanced_blood_rituals', 'course', 'Advanced blood rituals', 'A', '', 3, '', '', 10, '1@', '1C,1T,1@', 'B/W'),
-    Card('transference_of_life', 'course', 'Transference of life', 'A', '', 3, '', 'W,W,B,B', 12, '3C', '', 'B/W'),
-    Card('speaking_with_the_dead', 'course', 'Speaking with the dead', 'A1', '', 3, '', '', 10, '2C', '', 'W'),
-    Card('soul_mending', 'course', 'Sould mending', 'B', '', 2, 'A1', '', 5, '2@', '1T,1C', 'W'),
-    Card('conjuring_spirit_knights', 'course', 'Conjuring spirit knights', 'B', '', 2, '', 'W', 5, '2C', '', 'W'),
-    Card('poison_brewing', 'course', 'Poison brewing', 'B', '', 2, '', 'B', 5, '1C', '1C,1T', 'B'),
-    Card('spellbook_writing', 'course', 'Spellbook writing', 'B', '', 2, '', '', 5, '1C', '1C', ''),
-    Card('practice_magic_staffs', 'course', 'Practice: Magic staffs', 'B', '', 2, '', 'W,B', 5, '1@', '1C,1@', 'B/W'),
-    Card('invoking_shadowspawns', 'course', 'Invoking shadowspawns', 'B', '', 2, 'A2', '', 5, '2@', '1C', 'B'),
-    Card('defense_against_curses', 'course', 'Defense against curses', 'B', '', 2, '', 'B,W,W', 7, '2C', '', 'W'),
-    Card('drain_spell_seminar', 'course', 'Drain spells seminar', 'B', '', 2, '', 'B,B,W', 7, '1C,1T', '', 'B'),
-    Card('graveyards_of_the_realm', 'course', 'Graveyards of the realm', 'B', '', 2, '', '', 5, '1@', '', ''),
-    Card('tired', 'tired', 'TIRED', '', '', '', '', '', '', '', '', ''),
-    Card('tired', 'tired', 'TIRED', '', '', '', '', '', '', '', '', ''),
-    Card('sanity_boost', 'sanity_recovery', '@', '', '', '', '', '', '', '', '', ''),
-    Card('sanity_boost', 'sanity_recovery', '@', '', '', '', '', '', '', '', '', '')
+    Card('abyssal_language', 'course', 'Abyssal language', 'C', 0, 1, '', '', 2, '', '', 'B'),
+    Card('heraldry_of_the_astrals', 'course', 'Heraldry of the Astrals', 'C', 0, 1, '', '', 2, '', '', ''),
+    Card('holy_animals', 'course', 'Holy animals', 'C', 0, 1, '', '', 2, '', '', 'W'),
+    Card('history_of_the_void', 'course', 'History of the Void', 'A2', 0, 3, '', '', 10, '2@', '', 'B'),
+    Card('advanced_blood_rituals', 'course', 'Advanced blood rituals', 'A', 0, 3, '', '', 10, '1@', '1C,1T,1@', 'B/W'),
+    Card('transference_of_life', 'course', 'Transference of life', 'A', 0, 3, '', 'W,W,B,B', 12, '3C', '', 'B/W'),
+    Card('speaking_with_the_dead', 'course', 'Speaking with the dead', 'A1', 0, 3, '', '', 10, '2C', '', 'W'),
+    Card('soul_mending', 'course', 'Sould mending', 'B', 0, 2, 'A1', '', 5, '2@', '1T,1C', 'W'),
+    Card('conjuring_spirit_knights', 'course', 'Conjuring spirit knights', 'B', 0, 2, '', 'W', 5, '2C', '', 'W'),
+    Card('poison_brewing', 'course', 'Poison brewing', 'B', 0, 2, '', 'B', 5, '1C', '1C,1T', 'B'),
+    Card('spellbook_writing', 'course', 'Spellbook writing', 'B', 0, 2, '', '', 5, '1C', '1C', ''),
+    Card('practice_magic_staffs', 'course', 'Practice: Magic staffs', 'B', 0, 2, '', 'W,B', 5, '1@', '1C,1@', 'B/W'),
+    Card('invoking_shadowspawns', 'course', 'Invoking shadowspawns', 'B', 0, 2, 'A2', '', 5, '2@', '1C', 'B'),
+    Card('defense_against_curses', 'course', 'Defense against curses', 'B', 0, 2, '', 'B,W,W', 7, '2C', '', 'W'),
+    Card('drain_spell_seminar', 'course', 'Drain spells seminar', 'B', 0, 2, 0, 'B,B,W', 7, '1C,1T', '', 'B'),
+    Card('graveyards_of_the_realm', 'course', 'Graveyards of the realm', 'B', 0, 2, '', '', 5, '1@', '', ''),
+    Card('tired', 'tired', 'TIRED', '', 0, '', '', '', '', '', '', ''),
+    Card('tired', 'tired', 'TIRED', '', 0, '', '', '', '', '', '', ''),
+    Card('sanity_boost', 'sanity_recovery', '@', '', 0, '', '', '', '', '', '', ''),
+    Card('sanity_boost', 'sanity_recovery', '@', '', 0, '', '', '', '', '', '', '')
 ]
 
 expansion_cards = [
-    Card('tired', 'tired', 'TIRED', '', '', '', '', '', '', '', '', ''),
+    Card('tired', 'tired', 'TIRED', '', 0, '', '', '', '', '', '', ''),
     Card('sigils_of_power', 'course', 'Sigils of power', 'W', 1, 1, '', '', 3, '2@', '', ''),
     Card('banishing_the_undead', 'course', 'Banishing the undead', 'W', 1, 1, '', '', 3, '2C', '', 'W'),
     Card('dream_invasion', 'course', 'Dream invasion', 'W', 1, 1, '', '', 3, '2C', '', 'B'),
@@ -63,20 +63,8 @@ expansion_cards = [
 ci_path = "img/"
 ci_suffix = ".png"
 
-# data = pd.DataFrame(cards)
-# data = data.rename(columns={'card_type': 'type',
-#                             'card_text': 'text',
-#                             'card_level': 'level',
-#                             'card_admittance_sanity_price': 'admittance_sanity_price',
-#                             'card_admittance_course_level_prerequisite': 'admittance_course_level_prerequisite',
-#                             'card_admittance_magic_prerequisite': 'admittance_magic_prerequisite',
-#                             'card_credits': 'credits',
-#                             'card_study_buddy_1_effect': 'study_buddy_1_effect',
-#                             'card_study_buddy_2_effect': 'study_buddy_2_effect',
-#                             'card_learning_effect': 'learning_effect'})
-
 # for debugging purposes
-st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
+# st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
 # st.dataframe(data)
 
 st.logo(ci_path+"ginlogo.png",link="https://bulgur007.itch.io/graduate-in-necromancy")
@@ -100,6 +88,17 @@ def image_to_base64(image_path):
     with open(image_path, "rb") as img_file:
         base64_string = base64.b64encode(img_file.read()).decode('utf-8')
     return base64_string
+
+
+def check_thesis_price(p):
+    if p == 0:
+        return True # no thesis prerequisite
+    
+    if st.session_state.thesis_state > 1 and st.session_state.thesis_state - int(p) >= 0:
+        return True
+    
+    st.write(f"You don't have the Thesis prerequisite, it needs {p} and you have {st.session_state.thesis_state}")
+    return False
 
 
 def check_magic_prerequisities(p):
@@ -202,7 +201,9 @@ def show_playground(message = "", main_content=None):
         else:
             image_string = f"<image src='data:image/jpeg;base64,{img_base64}' width='50'/>"
         st.html(image_string)
-        if len(st.session_state.s2) == 12:
+        if len(st.session_state.s2) == 12 and not st.session_state.use_expansion:
+            st.markdown(f"Cards: {len(st.session_state.s2)} [FULL]")
+        elif len(st.session_state.s2) == 14 and st.session_state.use_expansion:
             st.markdown(f"Cards: {len(st.session_state.s2)} [FULL]")
         else:
             st.markdown(f"Cards: {len(st.session_state.s2)}")
@@ -287,6 +288,7 @@ def start_game():
     st.session_state.data = st.session_state.data.rename(columns={'card_type': 'type',
                             'card_text': 'text',
                             'card_level': 'level',
+                            'card_admittance_thesis_price': 'admittance_thesis_price',
                             'card_admittance_sanity_price': 'admittance_sanity_price',
                             'card_admittance_course_level_prerequisite': 'admittance_course_level_prerequisite',
                             'card_admittance_magic_prerequisite': 'admittance_magic_prerequisite',
@@ -346,6 +348,7 @@ def use_card():
     if (card_details['type'] == "course"
             and (st.session_state.sanity - card_details['admittance_sanity_price'] >= MIN_SANITY)
             and check_magic_prerequisities(card_details['admittance_magic_prerequisite'])
+            and check_thesis_price(card_details['admittance_thesis_price'])
             and check_course_level_prerequisites(card_details['admittance_course_level_prerequisite'])):
         actions.append('Enroll yourself to the course')
 
@@ -360,8 +363,9 @@ def use_card():
                 and len(st.session_state.s2) < 12):
             actions.append('Leave for the next semester')
 
-    if (len(st.session_state.s[st.session_state.current_semester]['courses']) > 0
-            and card_details['type'] != "tired"):
+    # if (len(st.session_state.s[st.session_state.current_semester]['courses']) > 0
+            # and card_details['type'] != "tired"):
+    if len(st.session_state.s[st.session_state.current_semester]['courses']) > 0:
         for item in st.session_state.s[st.session_state.current_semester]['courses']:
             cd = dict(st.session_state.data.loc[item[0]])
             buddy_slots = 0
@@ -370,7 +374,10 @@ def use_card():
             if cd['study_buddy_2_effect'] != "":
                 buddy_slots += 1
             if buddy_slots > item[1]:
-                actions.append(f"Raise Study Buddy for {cd['text']}")
+                if cd['level'] == 'W' and card_details['type'] == 'tired':
+                    actions.append(f"Raise Study Buddy for {cd['text']}")
+                elif cd['level'] != 'W' and card_details['type'] != 'tired':
+                    actions.append(f"Raise Study Buddy for {cd['text']}")
 
     if st.session_state.thesis_state < 5 and card_details['type'] != "tired":
         actions.append("Work on thesis")
@@ -392,6 +399,8 @@ def use_card():
                 st.session_state.credits_state += card_details['credits']
                 # add level
                 st.session_state.course_level_state.append(card_details['level'])
+                # subtract thesis (if needed):
+                st.session_state.thesis_state -= int(card_details['admittance_thesis_price'])
 
                 # add learned magic
                 if card_details['learning_effect'] != "":
