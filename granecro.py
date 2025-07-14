@@ -260,7 +260,11 @@ def show_playground(message = "", main_content=None):
 ############################################################################
 
 def deal_decks():
-    st.session_state.s1 = list(data.sample(12).index)
+    if st.session_state.expansion:
+        st.session_state.s1 = list(data.sample(14).index)
+    else:
+        st.session_state.s1 = list(data.sample(12).index)
+
     st.session_state.s2 = list(data[~data.index.isin(st.session_state.s1)].index)
 
 
@@ -328,10 +332,16 @@ def use_card():
             and check_course_level_prerequisites(card_details['admittance_course_level_prerequisite'])):
         actions.append('Enroll yourself to the course')
 
-    if (card_details['type'] == "course"
-            and st.session_state.current_semester == 1
-            and len(st.session_state.s2) < 12):
-        actions.append('Leave for the next semester')
+    if st.session_state.expansion:
+        if (card_details['type'] == "course"
+                and st.session_state.current_semester == 1
+                and len(st.session_state.s2) < 14):
+            actions.append('Leave for the next semester')
+    else:
+        if (card_details['type'] == "course"
+                and st.session_state.current_semester == 1
+                and len(st.session_state.s2) < 12):
+            actions.append('Leave for the next semester')
 
     if (len(st.session_state.s[st.session_state.current_semester]['courses']) > 0
             and card_details['type'] != "tired"):
