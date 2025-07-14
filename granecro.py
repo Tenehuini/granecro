@@ -63,20 +63,20 @@ expansion_cards = [
 ci_path = "img/"
 ci_suffix = ".png"
 
-data = pd.DataFrame(cards)
-data = data.rename(columns={'card_type': 'type',
-                            'card_text': 'text',
-                            'card_level': 'level',
-                            'card_admittance_sanity_price': 'admittance_sanity_price',
-                            'card_admittance_course_level_prerequisite': 'admittance_course_level_prerequisite',
-                            'card_admittance_magic_prerequisite': 'admittance_magic_prerequisite',
-                            'card_credits': 'credits',
-                            'card_study_buddy_1_effect': 'study_buddy_1_effect',
-                            'card_study_buddy_2_effect': 'study_buddy_2_effect',
-                            'card_learning_effect': 'learning_effect'})
+# data = pd.DataFrame(cards)
+# data = data.rename(columns={'card_type': 'type',
+#                             'card_text': 'text',
+#                             'card_level': 'level',
+#                             'card_admittance_sanity_price': 'admittance_sanity_price',
+#                             'card_admittance_course_level_prerequisite': 'admittance_course_level_prerequisite',
+#                             'card_admittance_magic_prerequisite': 'admittance_magic_prerequisite',
+#                             'card_credits': 'credits',
+#                             'card_study_buddy_1_effect': 'study_buddy_1_effect',
+#                             'card_study_buddy_2_effect': 'study_buddy_2_effect',
+#                             'card_learning_effect': 'learning_effect'})
 
 # for debugging purposes
-# st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
+st.write("<div style='font-size:12px; '>DEV " + str(st.session_state) + "</div>", unsafe_allow_html=True)
 # st.dataframe(data)
 
 st.logo(ci_path+"ginlogo.png",link="https://bulgur007.itch.io/graduate-in-necromancy")
@@ -153,7 +153,7 @@ def check_course_level_prerequisites(l):
 
 
 def effect_study_buddy(card_id, study_buddy_order):
-    effects = data.loc[card_id]['study_buddy_'+str(study_buddy_order)+'_effect'].split(",")
+    effects = st.session_state.data.loc[card_id]['study_buddy_'+str(study_buddy_order)+'_effect'].split(",")
 
     for e in effects:
         count = int(e[0])
@@ -225,7 +225,7 @@ def show_playground(message = "", main_content=None):
             s1_cols[0].write("S1")
 
             for i,item in enumerate(st.session_state.s[1]['courses'],1):
-                image = data.loc[item[0]]['card_image']
+                image = st.session_state.data.loc[item[0]]['card_image']
                 s1_cols[i].image(ci_path + image + ci_suffix, width=150)
 
                 if item[1] > 0:
@@ -248,7 +248,7 @@ def show_playground(message = "", main_content=None):
             s2_cols[0].write("S2")
 
             for i, item in enumerate(st.session_state.s[2]['courses'],1):
-                image = data.loc[item[0]]['card_image']
+                image = st.session_state.data.loc[item[0]]['card_image']
                 s2_cols[i].image(ci_path + image + ci_suffix, width=150)
                 if item[1] > 0:
                     image_string = ""
@@ -260,12 +260,12 @@ def show_playground(message = "", main_content=None):
 ############################################################################
 
 def deal_decks():
-    if st.session_state.expansion:
-        st.session_state.s1 = list(data.sample(14).index)
+    if st.session_state.use_expansion:
+        st.session_state.s1 = list(st.session_state.data.sample(14).index)
     else:
-        st.session_state.s1 = list(data.sample(12).index)
+        st.session_state.s1 = list(st.session_state.data.sample(12).index)
 
-    st.session_state.s2 = list(data[~data.index.isin(st.session_state.s1)].index)
+    st.session_state.s2 = list(st.session_state.data[~st.session_state.data.index.isin(st.session_state.s1)].index)
 
 
 def reset_game():
@@ -278,6 +278,23 @@ def reset_game():
 def start_game():
     st.session_state.game_started = True
     st.session_state.current_state = "turn card"
+    
+    game_cards = cards.copy()
+    if st.session_state.get("use_expansion"):
+        game_cards.extend(expansion_cards)
+
+    st.session_state.data = pd.DataFrame(game_cards)
+    st.session_state.data = st.session_state.data.rename(columns={'card_type': 'type',
+                            'card_text': 'text',
+                            'card_level': 'level',
+                            'card_admittance_sanity_price': 'admittance_sanity_price',
+                            'card_admittance_course_level_prerequisite': 'admittance_course_level_prerequisite',
+                            'card_admittance_magic_prerequisite': 'admittance_magic_prerequisite',
+                            'card_credits': 'credits',
+                            'card_study_buddy_1_effect': 'study_buddy_1_effect',
+                            'card_study_buddy_2_effect': 'study_buddy_2_effect',
+                            'card_learning_effect': 'learning_effect'})
+    
     deal_decks()
 
     st.write("Game started! Click 'Turn Card' to begin.")
@@ -311,13 +328,13 @@ def use_card():
 
     with c1use:
         if "current_card" in st.session_state:
-            card_image_file = data.loc[st.session_state.current_card]['card_image']
+            card_image_file = st.session_state.data.loc[st.session_state.current_card]['card_image']
             st.image(ci_path + card_image_file + ci_suffix, width=200)
         else:
             st.write("No card ?")
             st.stop()
 
-    card_details = dict(data.loc[st.session_state.current_card])
+    card_details = dict(st.session_state.data.loc[st.session_state.current_card])
     #st.write(card_details)
 
     actions = []
@@ -332,7 +349,7 @@ def use_card():
             and check_course_level_prerequisites(card_details['admittance_course_level_prerequisite'])):
         actions.append('Enroll yourself to the course')
 
-    if st.session_state.expansion:
+    if st.session_state.use_expansion:
         if (card_details['type'] == "course"
                 and st.session_state.current_semester == 1
                 and len(st.session_state.s2) < 14):
@@ -346,7 +363,7 @@ def use_card():
     if (len(st.session_state.s[st.session_state.current_semester]['courses']) > 0
             and card_details['type'] != "tired"):
         for item in st.session_state.s[st.session_state.current_semester]['courses']:
-            cd = dict(data.loc[item[0]])
+            cd = dict(st.session_state.data.loc[item[0]])
             buddy_slots = 0
             if cd['study_buddy_1_effect'] != "":
                 buddy_slots += 1
@@ -384,7 +401,7 @@ def use_card():
                 time.sleep(2)
             elif "Raise Study Buddy" in action:
                 for_card = action.replace("Raise Study Buddy for ","")
-                card_id = data.index[data["text"] == for_card].tolist()[0]
+                card_id = st.session_state.data.index[st.session_state.data["text"] == for_card].tolist()[0]
 
                 semester_courses = st.session_state.s[st.session_state.current_semester]['courses'].copy()
                 updated_courses = []
@@ -447,16 +464,30 @@ def end_game():
 def main():
     col1, col2, col3 = st.columns(3)
 
-    difficulties = ["Hard (45 points)", "Medium (40 points)", "Easy (35 points)"]
+    action = None
+    points_map = {}
 
-    if (not st.session_state.get("current_state")
-            or st.session_state.current_state in ("start game", "turn card")):
-    # if st.session_state.get("current_state") and st.session_state.current_state == "start game":
+    if not st.session_state.get("game_started", False):
         with col2:
+            st.checkbox("Use expansion?", key="expansion")
+
+            if st.session_state.get("expansion"):
+                difficulties = ["Hard (52 points)", "Medium (50 points)", "Easy (45 points)"]
+                points_map = {
+                    "Hard (52 points)": 52,
+                    "Medium (50 points)": 50,
+                    "Easy (45 points)": 45
+                }
+                st.session_state.use_expansion = True
+            else:
+                difficulties = ["Hard (45 points)", "Medium (40 points)", "Easy (35 points)"]
+                points_map = {
+                    "Hard (45 points)": POINTS_LEVEL_HARD,
+                    "Medium (40 points)": POINTS_LEVEL_MEDIUM,
+                    "Easy (35 points)": POINTS_LEVEL_EASY
+                }
+                st.session_state.use_expansion = False
             action = st.selectbox("Difficulty", difficulties)
-            # expansion = st.selectbox("Use expansion?", use_expansion)
-            # st.button("Next")
-            # st.session_state.current_state = "select difficulty"
 
     if col3.button("Reset", key="Reset"):
         reset_game()
@@ -469,23 +500,18 @@ def main():
 
     if st.session_state.current_state == "start game":
         if col1.button("Start Game"):
-            if action == "Hard (45 points)":
-                st.session_state.difficulty = POINTS_LEVEL_HARD
-            elif action == "Medium (40 points)":
-                st.session_state.difficulty = POINTS_LEVEL_MEDIUM
-            else:    
-                st.session_state.difficulty = POINTS_LEVEL_EASY
+            st.session_state.difficulty = points_map[action]
             start_game()
     elif st.session_state.current_state == "turn card":
         if st.button("Turn Card"):
             st.write("Turning card ...")
             time.sleep(3)
-            
+
         show_playground(message="It's time to turn a card!")
         turn_card()
     elif st.session_state.current_state == "use card":
         show_playground(message="Choose action for the card", main_content=use_card)
-        
+
         if st.session_state.current_state == "end game":
             end_game()
     elif st.session_state.current_state == "end game":
