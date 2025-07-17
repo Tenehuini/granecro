@@ -1,3 +1,4 @@
+from typing import Literal
 from collections import namedtuple
 import base64
 import pandas as pd
@@ -27,7 +28,7 @@ Card = namedtuple("Card", ["card_image",
                            "card_learning_effect"])
 
 
-cards = [
+cards: list[Card] = [
     Card('abyssal_language', 'course', 'Abyssal language', 'C', 0, 1, '', '', 2, '', '', 'B'),
     Card('heraldry_of_the_astrals', 'course', 'Heraldry of the Astrals', 'C', 0, 1, '', '', 2, '', '', ''),
     Card('holy_animals', 'course', 'Holy animals', 'C', 0, 1, '', '', 2, '', '', 'W'),
@@ -50,7 +51,7 @@ cards = [
     Card('sanity_boost', 'sanity_recovery', '@', '', 0, '', '', '', '', '', '', '')
 ]
 
-expansion_cards = [
+expansion_cards: list[Card] = [
     Card('tired', 'tired', 'TIRED', '', 0, '', '', '', '', '', '', ''),
     Card('sigils_of_power', 'course', 'Sigils of power', 'W', 1, 1, '', '', 3, '2@', '', ''),
     Card('banishing_the_undead', 'course', 'Banishing the undead', 'W', 1, 1, '', '', 3, '2C', '', 'W'),
@@ -58,8 +59,6 @@ expansion_cards = [
 
 ]
 
-# ci_path = "images/"
-# ci_suffix = ".tiff"
 ci_path = "img/"
 ci_suffix = ".png"
 
@@ -84,13 +83,13 @@ POINTS_LEVEL_HARD = 45
 ###########################################################################
 
 # support functions
-def image_to_base64(image_path):
+def image_to_base64(image_path) -> str:
     with open(image_path, "rb") as img_file:
         base64_string = base64.b64encode(img_file.read()).decode('utf-8')
     return base64_string
 
 
-def check_thesis_price(p):
+def check_thesis_price(p) -> bool:
     if p == 0:
         return True # no thesis prerequisite
     
@@ -101,7 +100,7 @@ def check_thesis_price(p):
     return False
 
 
-def check_magic_prerequisities(p):
+def check_magic_prerequisities(p) -> bool:
     if p == "":
         return True # no magic prerequisites
     #return True
@@ -116,7 +115,7 @@ def check_magic_prerequisities(p):
                 learned_magic.remove(i2)
                 break
 
-    def magic_to_word(x):
+    def magic_to_word(x) -> Literal['dark', 'dark or light', 'light'] | None:
         if x == "W":
             return "light"
         elif x == "B":
@@ -126,21 +125,20 @@ def check_magic_prerequisities(p):
         return None
 
     if len(checked) == len(p):
-        # st.write("Magic is enough.")
         return True
     else:
         present_magic = st.session_state.magic_state
         if len(present_magic) == 0:
             present_magic = "nothing so far"
         else:
-            present_magic = "just "+", ".join([magic_to_word(x) for x in present_magic])
+            present_magic = "just, ".join([magic_to_word(x) for x in present_magic])
 
         st.write(f"You don't have magic prerequisites, it needs "
                  f"{', '.join([magic_to_word(x) for x in p])}. You learned {present_magic}." ) # + str(len(checked)) + str(len(p))
         return False
 
 
-def check_course_level_prerequisites(l):
+def check_course_level_prerequisites(l) -> bool:
     if l=="":
         return True
     else:
@@ -151,7 +149,7 @@ def check_course_level_prerequisites(l):
             return False
 
 
-def effect_study_buddy(card_id, study_buddy_order):
+def effect_study_buddy(card_id, study_buddy_order) -> None:
     effects = st.session_state.data.loc[card_id]['study_buddy_'+str(study_buddy_order)+'_effect'].split(",")
 
     for e in effects:
@@ -171,7 +169,7 @@ def effect_study_buddy(card_id, study_buddy_order):
 ###########################################################################
 
 # UI
-def show_playground(message = "", main_content=None):
+def show_playground(message = "", main_content=None) -> None:
     if message!= "":
         st.markdown("<center>"+message+"</center>", unsafe_allow_html=True)
         st.markdown("", unsafe_allow_html=True)
@@ -260,7 +258,7 @@ def show_playground(message = "", main_content=None):
 
 ############################################################################
 
-def deal_decks():
+def deal_decks() -> None:
     if st.session_state.use_expansion:
         st.session_state.s1 = list(st.session_state.data.sample(14).index)
     else:
@@ -269,14 +267,14 @@ def deal_decks():
     st.session_state.s2 = list(st.session_state.data[~st.session_state.data.index.isin(st.session_state.s1)].index)
 
 
-def reset_game():
+def reset_game() -> None:
     st.session_state.clear()
     st.write("Resetting the game...")
     time.sleep(2)
     st.rerun()
 
 
-def start_game():
+def start_game() -> None:
     st.session_state.game_started = True
     st.session_state.current_state = "turn card"
     
@@ -314,7 +312,7 @@ def start_game():
     st.rerun()
 
 
-def turn_card():
+def turn_card() -> None:
     st.session_state.current_state = "use card"
 
     if len(st.session_state.s1) > 0:
@@ -325,7 +323,7 @@ def turn_card():
         st.session_state.current_state = "end game"
 
 
-def use_card():
+def use_card() -> None:
     c1use, c2use = st.columns(2)
 
     with c1use:
@@ -452,7 +450,7 @@ def use_card():
 
 
 @st.dialog("End")
-def end_game():
+def end_game() -> None:
     if (st.session_state.credits_state >= st.session_state.difficulty
             and st.session_state.sanity >= 0
             and st.session_state.thesis_state == 5):
@@ -470,7 +468,7 @@ def end_game():
     st.write("Game over. Thank you for playing!")
 
 
-def main():
+def main() -> None:
     col1, col2, col3 = st.columns(3)
 
     action = None
