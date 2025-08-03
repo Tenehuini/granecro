@@ -36,14 +36,14 @@ cards: list[Card] = [
     Card('advanced_blood_rituals', 'course', 'Advanced blood rituals', 'A', 0, 3, '', '', 10, '1@', '1C,1T,1@', 'B/W'),
     Card('transference_of_life', 'course', 'Transference of life', 'A', 0, 3, '', 'W,W,B,B', 12, '3C', '', 'B/W'),
     Card('speaking_with_the_dead', 'course', 'Speaking with the dead', 'A1', 0, 3, '', '', 10, '2C', '', 'W'),
-    Card('soul_mending', 'course', 'Sould mending', 'B', 0, 2, 'A1', '', 5, '2@', '1T,1C', 'W'),
+    Card('soul_mending', 'course', 'Soul mending', 'B', 0, 2, 'A1', '', 5, '2@', '1T,1C', 'W'),
     Card('conjuring_spirit_knights', 'course', 'Conjuring spirit knights', 'B', 0, 2, '', 'W', 5, '2C', '', 'W'),
     Card('poison_brewing', 'course', 'Poison brewing', 'B', 0, 2, '', 'B', 5, '1C', '1C,1T', 'B'),
     Card('spellbook_writing', 'course', 'Spellbook writing', 'B', 0, 2, '', '', 5, '1C', '1C', ''),
     Card('practice_magic_staffs', 'course', 'Practice: Magic staffs', 'B', 0, 2, '', 'W,B', 5, '1@', '1C,1@', 'B/W'),
     Card('invoking_shadowspawns', 'course', 'Invoking shadowspawns', 'B', 0, 2, 'A2', '', 5, '2@', '1C', 'B'),
     Card('defense_against_curses', 'course', 'Defense against curses', 'B', 0, 2, '', 'B,W,W', 7, '2C', '', 'W'),
-    Card('drain_spell_seminar', 'course', 'Drain spells seminar', 'B', 0, 2, 0, 'B,B,W', 7, '1C,1T', '', 'B'),
+    Card('drain_spell_seminar', 'course', 'Drain spells seminar', 'B', 0, 2, '', 'B,B,W', 7, '1C,1T', '', 'B'),
     Card('graveyards_of_the_realm', 'course', 'Graveyards of the realm', 'B', 0, 2, '', '', 5, '1@', '', ''),
     Card('tired', 'tired', 'TIRED', '', 0, '', '', '', '', '', '', ''),
     Card('tired', 'tired', 'TIRED', '', 0, '', '', '', '', '', '', ''),
@@ -91,7 +91,7 @@ def image_to_base64(image_path) -> str:
 
 def check_thesis_price(p) -> bool:
     if p == 0:
-        return True # no thesis prerequisite
+        return True  # no thesis prerequisite
     
     if st.session_state.thesis_state > 1 and st.session_state.thesis_state - int(p) >= 0:
         return True
@@ -102,8 +102,7 @@ def check_thesis_price(p) -> bool:
 
 def check_magic_prerequisities(p) -> bool:
     if p == "":
-        return True # no magic prerequisites
-    #return True
+        return True  # no magic prerequisites
     p = p.split(",")
 
     learned_magic = st.session_state.magic_state.copy()
@@ -121,7 +120,7 @@ def check_magic_prerequisities(p) -> bool:
         elif x == "B":
             return "dark"
         elif x == "B/W":
-            return"dark or light"
+            return "dark or light"
         return None
 
     if len(checked) == len(p):
@@ -134,12 +133,12 @@ def check_magic_prerequisities(p) -> bool:
             present_magic = "just, ".join([magic_to_word(x) for x in present_magic])
 
         st.write(f"You don't have magic prerequisites, it needs "
-                 f"{', '.join([magic_to_word(x) for x in p])}. You learned {present_magic}." ) # + str(len(checked)) + str(len(p))
+                 f"{', '.join([magic_to_word(x) for x in p])}. You learned {present_magic}.")
         return False
 
 
 def check_course_level_prerequisites(l) -> bool:
-    if l=="":
+    if l == "":
         return True
     else:
         if l in st.session_state.course_level_state:
@@ -169,8 +168,8 @@ def effect_study_buddy(card_id, study_buddy_order) -> None:
 ###########################################################################
 
 # UI
-def show_playground(message = "", main_content=None) -> None:
-    if message!= "":
+def show_playground(message="", main_content=None) -> None:
+    if message != "":
         st.markdown("<center>"+message+"</center>", unsafe_allow_html=True)
         st.markdown("", unsafe_allow_html=True)
 
@@ -213,7 +212,7 @@ def show_playground(message = "", main_content=None) -> None:
             st.html("<div style='height:280px;'></div>")
 
         if len(st.session_state.s[1]['courses']) > 0:
-            s1_col_num  = len(st.session_state.s[1]['courses']) + 1
+            s1_col_num = len(st.session_state.s[1]['courses']) + 1
             col_config = []
             for i in range(s1_col_num):
                 if i == 0:
@@ -223,13 +222,13 @@ def show_playground(message = "", main_content=None) -> None:
             s1_cols = st.columns(col_config)
             s1_cols[0].write("S1")
 
-            for i,item in enumerate(st.session_state.s[1]['courses'],1):
+            for i, item in enumerate(st.session_state.s[1]['courses'], 1):
                 image = st.session_state.data.loc[item[0]]['card_image']
                 s1_cols[i].image(ci_path + image + ci_suffix, width=150)
 
                 if item[1] > 0:
                     image_string = ""
-                    for ii in range(0,item[1]):
+                    for ii in range(0, item[1]):
                         img_base64 = image_to_base64(ci_path+"back.png")
                         image_string += f"<image src='data:image/jpeg;base64,{img_base64}' width='40'/>"
                     s1_cols[i].html(image_string)
@@ -246,7 +245,7 @@ def show_playground(message = "", main_content=None) -> None:
             s2_cols = st.columns(col_config)
             s2_cols[0].write("S2")
 
-            for i, item in enumerate(st.session_state.s[2]['courses'],1):
+            for i, item in enumerate(st.session_state.s[2]['courses'], 1):
                 image = st.session_state.data.loc[item[0]]['card_image']
                 s2_cols[i].image(ci_path + image + ci_suffix, width=150)
                 if item[1] > 0:
@@ -283,17 +282,19 @@ def start_game() -> None:
         game_cards.extend(expansion_cards)
 
     st.session_state.data = pd.DataFrame(game_cards)
-    st.session_state.data = st.session_state.data.rename(columns={'card_type': 'type',
-                            'card_text': 'text',
-                            'card_level': 'level',
-                            'card_admittance_thesis_price': 'admittance_thesis_price',
-                            'card_admittance_sanity_price': 'admittance_sanity_price',
-                            'card_admittance_course_level_prerequisite': 'admittance_course_level_prerequisite',
-                            'card_admittance_magic_prerequisite': 'admittance_magic_prerequisite',
-                            'card_credits': 'credits',
-                            'card_study_buddy_1_effect': 'study_buddy_1_effect',
-                            'card_study_buddy_2_effect': 'study_buddy_2_effect',
-                            'card_learning_effect': 'learning_effect'})
+    st.session_state.data = st.session_state.data.rename(columns={
+        'card_type': 'type',
+        'card_text': 'text',
+        'card_level': 'level',
+        'card_admittance_thesis_price': 'admittance_thesis_price',
+        'card_admittance_sanity_price': 'admittance_sanity_price',
+        'card_admittance_course_level_prerequisite': 'admittance_course_level_prerequisite',
+        'card_admittance_magic_prerequisite': 'admittance_magic_prerequisite',
+        'card_credits': 'credits',
+        'card_study_buddy_1_effect': 'study_buddy_1_effect',
+        'card_study_buddy_2_effect': 'study_buddy_2_effect',
+        'card_learning_effect': 'learning_effect'
+    })
     
     deal_decks()
 
@@ -335,12 +336,11 @@ def use_card() -> None:
             st.stop()
 
     card_details = dict(st.session_state.data.loc[st.session_state.current_card])
-    #st.write(card_details)
 
     actions = []
     # find possible actions
     if (card_details['type'] == "sanity_recovery"
-          and st.session_state.sanity < MAX_SANITY):
+            and st.session_state.sanity < MAX_SANITY):
         actions.append('Recover sanity point')
 
     if (card_details['type'] == "course"
@@ -361,8 +361,6 @@ def use_card() -> None:
                 and len(st.session_state.s2) < 12):
             actions.append('Leave for the next semester')
 
-    # if (len(st.session_state.s[st.session_state.current_semester]['courses']) > 0
-            # and card_details['type'] != "tired"):
     if len(st.session_state.s[st.session_state.current_semester]['courses']) > 0:
         for item in st.session_state.s[st.session_state.current_semester]['courses']:
             cd = dict(st.session_state.data.loc[item[0]])
@@ -407,21 +405,21 @@ def use_card() -> None:
                 st.write(f"You have enrolled to '{card_details['text']}' for {int(card_details['admittance_sanity_price'])} sanity points!")
                 time.sleep(2)
             elif "Raise Study Buddy" in action:
-                for_card = action.replace("Raise Study Buddy for ","")
+                for_card = action.replace("Raise Study Buddy for ", "")
                 card_id = st.session_state.data.index[st.session_state.data["text"] == for_card].tolist()[0]
 
                 semester_courses = st.session_state.s[st.session_state.current_semester]['courses'].copy()
                 updated_courses = []
                 for course in semester_courses:
                     if course[0] == card_id:
-                        updated_courses.append((course[0],course[1]+1))
+                        updated_courses.append((course[0], course[1]+1))
                         study_buddy_order = course[1]+1
                     else:
                         updated_courses.append((course[0], course[1]))
 
                 st.session_state.s[st.session_state.current_semester]['courses'] = updated_courses
 
-                effect_study_buddy(card_id,study_buddy_order)
+                effect_study_buddy(card_id, study_buddy_order)
 
                 st.write(f"Raise 'Study Buddy for card {card_id}' action performed!")
             elif action == "Work on thesis":
@@ -438,7 +436,7 @@ def use_card() -> None:
 
                 if st.session_state.sanity > MAX_SANITY:
                     st.session_state.sanity = MAX_SANITY
-                
+
                 random.shuffle(st.session_state.s2)
 
             if len(st.session_state.s2) == 0:
